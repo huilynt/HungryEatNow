@@ -4,8 +4,7 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class ManagerFunctions
+    class FoodItem
     {
-        //Test whether this shit work
     }
 }
