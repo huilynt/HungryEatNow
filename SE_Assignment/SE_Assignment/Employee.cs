@@ -62,6 +62,14 @@ namespace SE_Assignment
             set { status = value; }
         }
 
+        private Account account;
+
+        public Account Account
+        {
+            get { return account; }
+            set { account = value; }
+        }
+
         public void ProcessOrder() { }
 
     }

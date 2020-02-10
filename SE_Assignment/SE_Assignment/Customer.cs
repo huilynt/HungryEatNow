@@ -40,6 +40,12 @@ namespace SE_Assignment
 
         private Account account;
 
+        public Account Account
+        {
+            get { return account; }
+            set { account = value; }
+        }
+
         public Customer(int id, string name, string address, string contactNumber, Account account)
         {
             this.id = id;
