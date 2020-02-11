@@ -6,28 +6,10 @@ namespace SE_Assignment
 {
     class Account
     {
-        private int id;
+        public int id { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-        private string email;
-
-        public string Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
-
-        private string password;
-
-        public string Password
-        {
-            get { return password; }
-            set { password = value; }
-        }
 
         public Account(int id, string email, string password)
         {

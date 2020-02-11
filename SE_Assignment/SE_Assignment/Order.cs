@@ -6,69 +6,48 @@ namespace SE_Assignment
 {
     class Order
     {
-        private int id;
+        public int id { get; set; }
+        public string status { get; set; }
+        public DateTime createDateTime { get; set; }
+        public DateTime readyDateTime { get; set; }
+        public DateTime deliveryDateTime { get; set; }
+        public double deliveryCharge { get; set; }
+        public double subTotal { get; set; }
+        public double gst { get; set; }
+        public double totalAmount { get; set; }
+        public string deliveryType { get; set; }
+        public List<OrderItem> orderItemList { get; set; }
 
-        public int Id
+        public OrderState newOrderState { get; set; }
+        public OrderState preparingOrderState { get; set; }
+        public OrderState readyOrderState { get; set; }
+        public OrderState dispatchedOrderState { get; set; }
+        public OrderState deliveredOrderState { get; set; }
+        public OrderState cancelledOrderState { get; set; }
+        public OrderState archivedOrderState { get; set; }
+        public OrderState state { get; set; }
+
+        public Order(int id, DateTime createDateTime)
         {
-            get { return id; }
-            set { id = value; }
+            this.id = id;
+            this.status = "New";
+            this.createDateTime = createDateTime;
+            this.deliveryCharge = 0;
+            this.deliveryType = "Default";
+            this.gst = 7.00;
+            this.orderItemList = new List<OrderItem>();
+
+            this.newOrderState = new NewOrderState(this);
+            this.preparingOrderState = new PreparingOrderState(this);
+            this.readyOrderState = new ReadyOrderState(this);
+            this.dispatchedOrderState = new DispatchedOrderState(this);
+            this.deliveredOrderState = new DeliveredOrderState(this);
+            this.cancelledOrderState = new CancelledOrderState(this);
+            this.archivedOrderState = new ArchivedOrderState(this);
+
+            this.state = newOrderState;
         }
 
-        private string status;
-
-        public string Status
-        {
-            get { return status; }
-            set { status = value; }
-        }
-
-        private DateTime createDateTime;
-
-        public DateTime CreateDateTime
-        {
-            get { return createDateTime; }
-            set { createDateTime = value; }
-        }
-
-        private DateTime readyDateTime;
-
-        public DateTime ReadyDateTime
-        {
-            get { return readyDateTime; }
-            set { readyDateTime = value; }
-        }
-
-        private DateTime deliveryDateTime;
-
-        public DateTime DeliveryDateTime
-        {
-            get { return deliveryDateTime; }
-            set { deliveryDateTime = value; }
-        }
-
-        private double deliveryCharge;
-
-        public double DeliveryCharge
-        {
-            get { return deliveryCharge; }
-            set { deliveryCharge = value; }
-        }
-
-        private double totalAmount;
-
-        public double TotalAmount
-        {
-            get { return totalAmount; }
-            set { totalAmount = value; }
-        }
-
-        private string deliveryType;
-
-        public string DeliveryType
-        {
-            get { return deliveryType; }
-            set { deliveryType = value; }
-        }
 
     }
 }
