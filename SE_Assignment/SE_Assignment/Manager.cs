@@ -4,34 +4,25 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class Manager: Employee
+    class Manager : Employee
     {
-        private DateTime startTime;
+        public DateTime StartDate { get; set; }
 
-        public DateTime StartTime
+        public Manager(int id, string name, string nric, string gender, string contactNumber, DateTime dateJoined, string status, Account account) : base(id, name, nric, gender, contactNumber, dateJoined, status, account)
         {
-            get { return startTime; }
-            set { startTime = value; }
+            this.id = id;
+            this.name = name;
+            this.nric = nric;
+            this.gender = gender;
+            this.contactNumber = contactNumber;
+            this.dateJoined = dateJoined;
+            this.status = status;
+            this.account = account;
         }
-
-
-        public Manager(int id, string name, string NRIC, string gender, string contactNo, DateTime dateJoined, string status, Account account)
-        {
-            this.Name = name;
-            this.Id = id;
-            this.NRIC = NRIC;
-            this.Gender = gender;
-            this.ContactNumber = contactNo;
-            this.DateJoined = dateJoined;
-            this.Status = status;
-            this.Account = account;
-        }
-
         public void createMenu() { }
 
         public void createMenuItem() { }
 
         public void createFoodItem() { }
-
     }
 }

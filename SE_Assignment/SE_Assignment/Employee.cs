@@ -6,83 +6,30 @@ namespace SE_Assignment
 {
     abstract class Employee
     {
-        private int id;
+        public int id { get; set; }
+        public string name { get; set; }
+        public string nric { get; set; }
+        public string gender { get; set; }
+        public string contactNumber { get; set; }
+        public DateTime dateJoined { get; set; }
+        public string status { get; set; }
+        public Account account { get; set; }
 
-        public int Id
+        public Employee(int id, string name, string nric, string gender, string contactNumber, DateTime dateJoined, string status, Account account)
         {
-            get { return id; }
-            set { id = value; }
+            this.id = id;
+            this.name = name;
+            this.nric = nric;
+            this.gender = gender;
+            this.contactNumber = contactNumber;
+            this.dateJoined = dateJoined;
+            this.status = status;
+            this.account = account;
         }
 
-        private string name;
-
-        public string Name
+        public void HandleOrder(Order order)
         {
-            get { return name; }
-            set { name = value; }
+            // If using strategy pattern
         }
-
-        private string nric;
-
-        public string NRIC
-        {
-            get { return nric; }
-            set { nric = value; }
-        }
-
-        private string gender;
-
-        public string Gender
-        {
-            get { return gender; }
-            set { gender = value; }
-        }
-
-        private string contactNumber;
-
-        public string ContactNumber
-        {
-            get { return contactNumber; }
-            set { contactNumber = value; }
-        }
-
-        private DateTime dateJoined;
-
-        public DateTime DateJoined
-        {
-            get { return dateJoined; }
-            set { dateJoined = value; }
-        }
-
-        private string status;
-
-        public string Status
-        {
-            get { return status; }
-            set { status = value; }
-        }
-
-        private Account account;
-
-        public Account Account
-        {
-            get { return account; }
-            set { account = value; }
-        }
-
-        public void ProcessOrder() { }
-
-        //public Employee(int id, string name, string NRIC,string gender, string contactNo, DateTime dateJoined, string status, Account account)
-        //{
-        //    this.id = id;
-        //    this.name = name;
-        //    this.nric = NRIC;
-        //    this.gender = gender;
-        //    this.contactNumber = contactNo;
-        //    this.dateJoined = dateJoined;
-        //    this.status = status;
-        //    this.account = account; 
-        //}
-
     }
 }

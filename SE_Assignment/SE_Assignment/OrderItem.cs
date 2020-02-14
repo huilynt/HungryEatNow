@@ -4,11 +4,9 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class ManagerBehaviour : IUserBehaviour
+    class OrderItem
     {
-        public void processOrder(Order o)
-        {
+        public int quantity { get; set; }
 
-        }
     }
 }

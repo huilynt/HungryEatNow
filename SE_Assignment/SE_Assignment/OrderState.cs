@@ -6,11 +6,12 @@ namespace SE_Assignment
 {
     interface OrderState
     {
-        void confirmOrder();
+        void newOrder();
+        void prepareOrder();
         void readyOrder();
-        void deliveringOrder();
-        void deliverdOrder();
-        void cancelledOrder();
-        void archivedOrder();
+        void dispatchOrder();
+        void deliverOrder();
+        void cancelOrder();
+        void archiveOrder();
     }
 }

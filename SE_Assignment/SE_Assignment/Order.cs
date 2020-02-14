@@ -4,71 +4,69 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class Order
+    class Order : Subject
     {
-        private int id;
+        public int id { get; set; }
+        public string status { get; set; }
+        public DateTime createDateTime { get; set; }
+        public DateTime readyDateTime { get; set; }
+        public DateTime deliveryDateTime { get; set; }
+        public double deliveryCharge { get; set; }
+        public double subTotal { get; set; }
+        public double gst { get; set; }
+        public double totalAmount { get; set; }
+        public string deliveryType { get; set; }
+        public List<OrderItem> orderItemList { get; set; }
 
-        public int Id
+        public OrderState newOrderState { get; set; }
+        public OrderState preparingOrderState { get; set; }
+        public OrderState readyOrderState { get; set; }
+        public OrderState dispatchedOrderState { get; set; }
+        public OrderState deliveredOrderState { get; set; }
+        public OrderState cancelledOrderState { get; set; }
+        public OrderState archivedOrderState { get; set; }
+        public OrderState state { get; set; }
+
+        private List<Observer> observers = new List<Observer>();
+
+        public Order(int id, DateTime createDateTime)
         {
-            get { return id; }
-            set { id = value; }
+            this.id = id;
+            status = "New";
+            this.createDateTime = createDateTime;
+            deliveryCharge = 0;
+            deliveryType = "Default";
+            gst = 7.00;
+            orderItemList = new List<OrderItem>();
+
+            newOrderState = new NewOrderState(this);
+            preparingOrderState = new PreparingOrderState(this);
+            readyOrderState = new ReadyOrderState(this);
+            dispatchedOrderState = new DispatchedOrderState(this);
+            deliveredOrderState = new DeliveredOrderState(this);
+            cancelledOrderState = new CancelledOrderState(this);
+            archivedOrderState = new ArchivedOrderState(this);
+
+            state = newOrderState;
         }
 
-        private string status;
-
-        public string Status
+        public void registerObserver(Observer o)
         {
-            get { return status; }
-            set { status = value; }
+            observers.Add(o);
+        }
+        public void removeObserver(Observer o)
+        {
+            observers.Remove(o);
+
+        }
+        public void notifyObservers()
+        {
+            foreach (Observer o in observers)
+            {
+                o.update(this);
+            }
         }
 
-        private DateTime createDateTime;
-
-        public DateTime CreateDateTime
-        {
-            get { return createDateTime; }
-            set { createDateTime = value; }
-        }
-
-        private DateTime readyDateTime;
-
-        public DateTime ReadyDateTime
-        {
-            get { return readyDateTime; }
-            set { readyDateTime = value; }
-        }
-
-        private DateTime deliveryDateTime;
-
-        public DateTime DeliveryDateTime
-        {
-            get { return deliveryDateTime; }
-            set { deliveryDateTime = value; }
-        }
-
-        private double deliveryCharge;
-
-        public double DeliveryCharge
-        {
-            get { return deliveryCharge; }
-            set { deliveryCharge = value; }
-        }
-
-        private double totalAmount;
-
-        public double TotalAmount
-        {
-            get { return totalAmount; }
-            set { totalAmount = value; }
-        }
-
-        private string deliveryType;
-
-        public string DeliveryType
-        {
-            get { return deliveryType; }
-            set { deliveryType = value; }
-        }
-
+        public void displayOrders(List<Order> orderList) { }
     }
 }

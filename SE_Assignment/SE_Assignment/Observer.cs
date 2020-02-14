@@ -4,8 +4,8 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    interface IUserBehaviour
+    interface Observer
     {
-        void processOrder(Order o);
+        void update(Subject sub);
     }
 }

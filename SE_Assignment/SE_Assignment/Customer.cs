@@ -6,45 +6,12 @@ namespace SE_Assignment
 {
     class Customer
     {
-        private int id;
-
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-
-        private string name;
-
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
-
-        private string address;
-
-        public string Address
-        {
-            get { return address; }
-            set { address = value; }
-        }
-
-        private string contactNumber;
-
-        public string ContactNumber
-        {
-            get { return contactNumber; }
-            set { contactNumber = value; }
-        }
-
-        private Account account;
-
-        public Account Account
-        {
-            get { return account; }
-            set { account = value; }
-        }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string address { get; set; }
+        public string contactNumber { get; set; }
+        public Account account { get; set; }
+        public List<Order> orderList { get; set; }
 
         public Customer(int id, string name, string address, string contactNumber, Account account)
         {
@@ -53,6 +20,7 @@ namespace SE_Assignment
             this.address = address;
             this.contactNumber = contactNumber;
             this.account = account;
+            this.orderList = new List<Order>();
         }
     }
 }

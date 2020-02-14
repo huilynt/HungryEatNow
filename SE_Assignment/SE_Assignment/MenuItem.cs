@@ -4,26 +4,8 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class MenuItem
+    class MenuItem : Item
     {
-        private int menuitemID;
-        public int MenuItemID
-        {
-            get { return menuitemID; }
-            set { menuitemID = value; }
-        }
-
-        public void updateMenuItem()
-        {
-
-        }
-        public void removeMenuItem()
-        {
-
-        }
-        public void displayMenuItem()
-        {
-
-        }
+        public int size { get; set; }
     }
 }

@@ -11,139 +11,305 @@ namespace SE_Assignment
             List<Account> accountList = new List<Account>();
             List<Customer> customerList = new List<Customer>();
             List<Employee> employeeList = new List<Employee>();
+            List<Order> orderList = new List<Order>();
 
-            InitData(accountList, customerList, employeeList);
-            foreach (Account c in accountList)
-            {
-                Console.WriteLine(c.Email);
-            }
-            Console.WriteLine(accountList.Count);
+            InitData();
+            //foreach (Account c in accountList)
+            //{
+            //    Console.WriteLine(c.email);
+            //}
+            //Console.WriteLine(accountList.Count);
 
-            bool login = false;
-            while (!login)
+            Object user = null;
+            while (true)
             {
                 Console.WriteLine("Login");
                 Console.WriteLine("=====");
-                Console.WriteLine("1    Customer");
-                Console.WriteLine("2    Employee");
-
-                string loginType = Console.ReadLine();
-                string email = "";
-                string password = "";
-
-                if (loginType == "1" || loginType == "2")
+                Console.WriteLine("1 Customer");
+                Console.WriteLine("2 Employee");
+                Console.WriteLine("0 Exit");
+                Console.Write("Please select an option: ");
+                int loginOption = -1;
+                try
                 {
-                    login = HandleLogin(loginType, email, password, customerList, employeeList);
+                    loginOption = Int32.Parse(Console.ReadLine());
+
+                    string email = "";
+                    string password = "";
+
+                    if (loginOption == 1 || loginOption == 2)
+                    {
+                        user = HandleLogin(loginOption, email, password);
+                        if (user is Chef)
+                        {
+                            DisplayChefMenu((Chef)user);
+                        }
+                    }
+                    else if (loginOption == 0) { break; }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid option!\n");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Please enter a valid option!\n");
+                }
+
+
+            }
+            // Console.ReadKey();
+
+            // Functions
+
+            // Initialize all data here
+            void InitData()
+            {
+                string password = "123";
+
+                // Account
+                Account account1 = new Account(1, "customer1@se.com", password);
+                Account account2 = new Account(2, "employee1@se.com", password);
+                Account account3 = new Account(3, "manager1@se.com", password);
+                Account account4 = new Account(4, "assistant1@se.com", password);
+                Account account5 = new Account(5, "chef1@se.com", password);
+                Account account6 = new Account(6, "dispatcher1@se.com", password);
+                accountList.Add(account1);
+                accountList.Add(account2);
+                accountList.Add(account3);
+                accountList.Add(account4);
+                accountList.Add(account5);
+                accountList.Add(account6);
+
+                // Customer
+                Customer customer1 = new Customer(1, "Edgar", "Yew Tee", "87654321", account1);
+                customerList.Add(customer1);
+
+                // Manager
+                Manager manager1 = new Manager(1, "Ikmaal", "T1234567A", "Male", "87654321", DateTime.Now, "Status", account3);
+                employeeList.Add(manager1);
+
+                // Chef
+                Chef chef1 = new Chef(1, "Daniel", "T1234567A", "Male", "87654321", DateTime.Now, "Status", account5);
+                employeeList.Add(chef1);
+
+                // Order
+                Order order1 = new Order(1, DateTime.Now);
+                Order order2 = new Order(2, DateTime.Now);
+                Order order3 = new Order(3, DateTime.Now);
+                Order order4 = new Order(4, DateTime.Now);
+                order4.state = order4.preparingOrderState;
+                orderList.Add(order1);
+                orderList.Add(order2);
+                orderList.Add(order3);
+                orderList.Add(order4);
+                customer1.orderList.Add(order1);
+                customer1.orderList.Add(order2);
+                customer1.orderList.Add(order3);
+                customer1.orderList.Add(order4);
+            }
+
+            // Log user in
+            Object HandleLogin(int loginOption, string email, string password)
+            {
+                Console.Write("Email: ");
+                email = Console.ReadLine();
+
+                Console.Write("Password: ");
+                password = Console.ReadLine();
+
+                Console.WriteLine("");
+
+                Object loginUser = new Object();
+
+                if (loginOption == 1)
+                {
+                    foreach (Customer c in customerList)
+                    {
+                        if (c.account.email == email && c.account.password == password)
+                        {
+                            loginUser = c;
+                            Console.WriteLine("Logged in successfully!");
+                            Console.WriteLine($"Welcome, {c.name}!\n");
+                        }
+                    }
+                }
+                else if (loginOption == 2)
+                {
+                    foreach (Employee e in employeeList)
+                    {
+                        if (e.account.email == email && e.account.password == password)
+                        {
+                            loginUser = e;
+                            Console.WriteLine("Logged in successfully!");
+                            Console.WriteLine($"Welcome, {e.name}!\n");
+                        }
+                    }
+                }
+                else { Console.WriteLine("Please select a valid option!\n"); }
+                return loginUser;
+            }
+
+            void DisplayChefMenu(Chef chef)
+            {
+                while (true)
+                {
+                    Console.WriteLine("Chef Menu");
+                    Console.WriteLine("=========");
+                    Console.WriteLine("1 Prepare Order");
+                    Console.WriteLine("2 Ready Order");
+                    Console.WriteLine("0 Exit");
+                    Console.Write("Please select an option: ");
+
+                    int option = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("");
+
+                    if (option == 1)
+                    {
+                        Console.WriteLine("Showing all New orders");
+                        List<Order> orderByStateList = GetOrdersByState(new NewOrderState());
+                        DisplayOrders(orderByStateList, new NewOrderState());
+                        Console.Write("Select an order: ");
+
+                        int orderOption = -1;
+                        try
+                        {
+                            orderOption = Int32.Parse(Console.ReadLine());
+
+                            Console.WriteLine("");
+
+                            Order chosenOrder = GetOrderById(orderOption);
+
+                            if (chosenOrder == null)
+                            {
+                                Console.WriteLine("Invalid Order.");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Change Order {orderOption} to Preparing?");
+                                Console.WriteLine("1 Confirm");
+                                Console.WriteLine("2 Cancel");
+                                Console.Write("Select an option: ");
+
+                                int confirmOption = Int32.Parse(Console.ReadLine());
+
+                                Console.WriteLine("");
+
+                                if (confirmOption == 1)
+                                {
+                                    chef.prepareOrder(chosenOrder);
+                                }
+                                else if (confirmOption == 2)
+                                {
+                                    Console.WriteLine($"Cancelled changing Order {orderOption} to Preparing");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Please select a valid option!\n");
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Please select a valid option!\n");
+                        }
+                    }
+                    else if (option == 2)
+                    {
+                        Console.WriteLine("Showing all Preparing orders");
+                        List<Order> orderByStateList = GetOrdersByState(new NewOrderState());
+                        DisplayOrders(orderByStateList, new NewOrderState());
+                        Console.Write("Select an order: ");
+
+                        int orderOption = Int32.Parse(Console.ReadLine());
+
+                        Console.WriteLine("");
+
+                        Order chosenOrder = GetOrderById(orderOption);
+
+                        if (chosenOrder == null)
+                        {
+                            Console.WriteLine("Invalid Order.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Change Order {orderOption} to Ready?");
+                            Console.WriteLine("1 Confirm");
+                            Console.WriteLine("2 Cancel");
+                            Console.Write("Select an option: ");
+
+                            int confirmOption = Int32.Parse(Console.ReadLine());
+
+                            Console.WriteLine("");
+
+                            if (confirmOption == 1)
+                            {
+                                chef.readyOrder(chosenOrder);
+                            }
+                            else if (confirmOption == 2)
+                            {
+                                Console.WriteLine($"Cancelled changing Order {orderOption} to Ready");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please select a valid option!");
+                            }
+                        }
+                    }
+                    else if (option == 0) { break; }
+                    else { Console.WriteLine("Please select a valid option!"); }
+                }
+            }
+
+            List<Order> DisplayOrders(List<Order> displayOrderList, OrderState state)
+            {
+                if (displayOrderList.Count > 0)
+                {
+                    foreach (Order o in displayOrderList)
+                    {
+                        Console.WriteLine($"Order {o.id}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid option!");
+                    Console.WriteLine($"No {state.ToString()} orders");
                 }
+                return displayOrderList;
             }
 
-            Console.ReadKey();
-        }
-
-        static void InitData(List<Account> accountList, List<Customer> customerList, List<Employee> employeeList)
-        {
-            string password = "12345678";
-
-            Account account1 = new Account(1, "customer1@se.com", password);
-            Account account2 = new Account(2, "employee1@se.com", password);
-            Account account3 = new Account(3, "manager1@se.com", password);
-            Account account4 = new Account(4, "assistant1@se.com", password);
-            Account account5 = new Account(5, "chef1@se.com", password);
-            Account account6 = new Account(6, "dispatcher1@se.com", password);
-            accountList.Add(account1);
-            accountList.Add(account2);
-            accountList.Add(account3);
-            accountList.Add(account4);
-            accountList.Add(account5);
-            accountList.Add(account6);
-
-            Customer customer1 = new Customer(1, "Edgar", "Yew Tee", "87654321", account1);
-            customerList.Add(customer1); 
-
-
-            DateTime currentDate = new DateTime(2020, 2, 11);
-            Manager manager1 = new Manager(1 , "Manageer", "T1236592Z", "Male", "12345678", currentDate, "Manager", account3);
-            employeeList.Add(manager1);
-
-            //Order order1 = new Order()
-        }
-
-        static bool HandleLogin(string loginType, string email, string password, List<Customer> customerList, List<Employee> employeeList)
-        {
-            Console.Write("Email:");
-            email = Console.ReadLine();
-
-            Console.Write("Password:");
-            password = Console.ReadLine();
-
-            bool success = false;
-
-            if (loginType == "1")
+            List<Order> GetOrdersByState(OrderState state)
             {
-                foreach (Customer c in customerList)
+                List<Order> orderByStateList = new List<Order>();
+                if (state != null)
                 {
-                    if (c.Account.Email == email && c.Account.Password == password)
+                    foreach (Order o in orderList)
                     {
-                        success = true;
-                        Console.WriteLine("Logged in successfully!");
-                        Console.WriteLine($"Welcome, {c.Name}!");
+                        if (o.state.GetType() == state.GetType())
+                        {
+                            orderByStateList.Add(o);
+                        }
                     }
                 }
-            }
-            else if (loginType == "2")
-            {
-                foreach (Employee e in employeeList)
+                else
                 {
-                    if (e.Account.Email == email && e.Account.Password == password)
+                    foreach (Order o in orderList)
                     {
-                        success = true;
-                        Console.WriteLine("Logged in successfully!");
-                        Console.WriteLine($"Welcome, {e.Name}!");
-                        ManagerMenu(loginType, e.Status);
+                        orderByStateList.Add(o);
                     }
                 }
+                return orderByStateList;
             }
-            return success;
-        }
 
-        static void ManagerMenu(string loginType, string status)
-        {
-            Console.WriteLine("Choose action\n" +
-                "1) Add Food Item\n" +
-                "2) Update Food Item\n" +
-                "3) Delete Food Item\n" +
-                "4) Add Menu\n" +
-                "5) Update Menu\n" +
-                "6) Delete Menu\n" +
-                "0) Escape from this");
-
-            string selection = Console.ReadLine();
-            switch (Convert.ToInt32(selection))
+            Order GetOrderById(int id)
             {
-                case 1:
-                    Console.WriteLine("Its 1");
-                    break;
-                case 2:
-                    Console.WriteLine("Its 2");
-                    break;
-                case 3:
-                    Console.WriteLine("Its 3");
-                    break;
-                case 4:
-                    Console.WriteLine("Its 4");
-                    break;
-                case 5:
-                    Console.WriteLine("Its 5");
-                    break;
-                case 6:
-                    Console.WriteLine("Its 6");
-                    break;
-                case 0:
-                    break;
+                foreach (Order o in orderList)
+                {
+                    if (o.id == id)
+                    {
+                        return o;
+                    }
+                }
+                return null;
             }
         }
     }
