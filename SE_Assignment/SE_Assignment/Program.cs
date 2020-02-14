@@ -62,17 +62,22 @@ namespace SE_Assignment
             accountList.Add(account6);
 
             Customer customer1 = new Customer(1, "Edgar", "Yew Tee", "87654321", account1);
-            customerList.Add(customer1);
+            customerList.Add(customer1); 
+
+
+            DateTime currentDate = new DateTime(2020, 2, 11);
+            Manager manager1 = new Manager(1 , "Manageer", "T1236592Z", "Male", "12345678", currentDate, "Manager", account3);
+            employeeList.Add(manager1);
 
             //Order order1 = new Order()
         }
 
         static bool HandleLogin(string loginType, string email, string password, List<Customer> customerList, List<Employee> employeeList)
         {
-            Console.WriteLine("Email:");
+            Console.Write("Email:");
             email = Console.ReadLine();
 
-            Console.WriteLine("Password:");
+            Console.Write("Password:");
             password = Console.ReadLine();
 
             bool success = false;
@@ -98,10 +103,48 @@ namespace SE_Assignment
                         success = true;
                         Console.WriteLine("Logged in successfully!");
                         Console.WriteLine($"Welcome, {e.Name}!");
+                        ManagerMenu(loginType, e.Status);
                     }
                 }
             }
             return success;
+        }
+
+        static void ManagerMenu(string loginType, string status)
+        {
+            Console.WriteLine("Choose action\n" +
+                "1) Add Food Item\n" +
+                "2) Update Food Item\n" +
+                "3) Delete Food Item\n" +
+                "4) Add Menu\n" +
+                "5) Update Menu\n" +
+                "6) Delete Menu\n" +
+                "0) Escape from this");
+
+            string selection = Console.ReadLine();
+            switch (Convert.ToInt32(selection))
+            {
+                case 1:
+                    Console.WriteLine("Its 1");
+                    break;
+                case 2:
+                    Console.WriteLine("Its 2");
+                    break;
+                case 3:
+                    Console.WriteLine("Its 3");
+                    break;
+                case 4:
+                    Console.WriteLine("Its 4");
+                    break;
+                case 5:
+                    Console.WriteLine("Its 5");
+                    break;
+                case 6:
+                    Console.WriteLine("Its 6");
+                    break;
+                case 0:
+                    break;
+            }
         }
     }
 }

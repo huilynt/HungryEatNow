@@ -72,5 +72,17 @@ namespace SE_Assignment
 
         public void ProcessOrder() { }
 
+        //public Employee(int id, string name, string NRIC,string gender, string contactNo, DateTime dateJoined, string status, Account account)
+        //{
+        //    this.id = id;
+        //    this.name = name;
+        //    this.nric = NRIC;
+        //    this.gender = gender;
+        //    this.contactNumber = contactNo;
+        //    this.dateJoined = dateJoined;
+        //    this.status = status;
+        //    this.account = account; 
+        //}
+
     }
 }
