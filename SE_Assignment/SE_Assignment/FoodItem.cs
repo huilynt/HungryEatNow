@@ -4,7 +4,8 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class FoodItem
+    class FoodItem : Item
     {
+
     }
 }

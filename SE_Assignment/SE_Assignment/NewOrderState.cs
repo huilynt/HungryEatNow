@@ -46,11 +46,18 @@ namespace SE_Assignment
         {
             Console.WriteLine($"Preparing Order {order.id}");
             order.state = order.preparingOrderState;
+            Console.WriteLine($"Changed Order {order.id} to Preparing");
+            Console.WriteLine("");
         }
 
         public void readyOrder()
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return "New";
         }
     }
 }

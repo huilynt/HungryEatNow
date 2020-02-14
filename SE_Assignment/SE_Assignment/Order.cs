@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class Order
+    class Order : Subject
     {
         public int id { get; set; }
         public string status { get; set; }
@@ -27,27 +27,46 @@ namespace SE_Assignment
         public OrderState archivedOrderState { get; set; }
         public OrderState state { get; set; }
 
+        private List<Observer> observers = new List<Observer>();
+
         public Order(int id, DateTime createDateTime)
         {
             this.id = id;
-            this.status = "New";
+            status = "New";
             this.createDateTime = createDateTime;
-            this.deliveryCharge = 0;
-            this.deliveryType = "Default";
-            this.gst = 7.00;
-            this.orderItemList = new List<OrderItem>();
+            deliveryCharge = 0;
+            deliveryType = "Default";
+            gst = 7.00;
+            orderItemList = new List<OrderItem>();
 
-            this.newOrderState = new NewOrderState(this);
-            this.preparingOrderState = new PreparingOrderState(this);
-            this.readyOrderState = new ReadyOrderState(this);
-            this.dispatchedOrderState = new DispatchedOrderState(this);
-            this.deliveredOrderState = new DeliveredOrderState(this);
-            this.cancelledOrderState = new CancelledOrderState(this);
-            this.archivedOrderState = new ArchivedOrderState(this);
+            newOrderState = new NewOrderState(this);
+            preparingOrderState = new PreparingOrderState(this);
+            readyOrderState = new ReadyOrderState(this);
+            dispatchedOrderState = new DispatchedOrderState(this);
+            deliveredOrderState = new DeliveredOrderState(this);
+            cancelledOrderState = new CancelledOrderState(this);
+            archivedOrderState = new ArchivedOrderState(this);
 
-            this.state = newOrderState;
+            state = newOrderState;
         }
 
+        public void registerObserver(Observer o)
+        {
+            observers.Add(o);
+        }
+        public void removeObserver(Observer o)
+        {
+            observers.Remove(o);
 
+        }
+        public void notifyObservers()
+        {
+            foreach (Observer o in observers)
+            {
+                o.update(this);
+            }
+        }
+
+        public void displayOrders(List<Order> orderList) { }
     }
 }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class MenuItem
+    class MenuItem : Item
     {
+        public int size { get; set; }
     }
 }

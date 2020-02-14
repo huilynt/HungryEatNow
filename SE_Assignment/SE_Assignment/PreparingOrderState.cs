@@ -49,7 +49,16 @@ namespace SE_Assignment
 
         public void readyOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Preparing Order {order.id}...");
+            order.state = order.readyOrderState;
+            order.notifyObservers();
+            Console.WriteLine($"Changed Order {order.id} to Ready.");
+            Console.WriteLine("");
+        }
+
+        public override string ToString()
+        {
+            return "Ready";
         }
     }
 }
