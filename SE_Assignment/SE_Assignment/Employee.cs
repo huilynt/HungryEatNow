@@ -26,10 +26,5 @@ namespace SE_Assignment
             this.status = status;
             this.account = account;
         }
-
-        public void HandleOrder(Order order)
-        {
-            // If using strategy pattern
-        }
     }
 }

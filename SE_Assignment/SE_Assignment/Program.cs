@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using static SE_Assignment.MainFunctions;
+using static SE_Assignment.HelperFunctions;
 
 namespace SE_Assignment
 {
@@ -8,17 +8,9 @@ namespace SE_Assignment
     {
         static void Main(string[] args)
         {
-            List<Account> accountList = new List<Account>();
-            List<Customer> customerList = new List<Customer>();
-            List<Employee> employeeList = new List<Employee>();
-            List<Order> orderList = new List<Order>();
-
             InitData();
-            //foreach (Account c in accountList)
-            //{
-            //    Console.WriteLine(c.email);
-            //}
-            //Console.WriteLine(accountList.Count);
+
+
 
             Object user = null;
             while (true)
@@ -58,258 +50,117 @@ namespace SE_Assignment
 
 
             }
-            // Console.ReadKey();
-
-            // Functions
 
             // Initialize all data here
             void InitData()
             {
                 string password = "123";
 
-                // Account
-                Account account1 = new Account(1, "customer1@se.com", password);
-                Account account2 = new Account(2, "employee1@se.com", password);
-                Account account3 = new Account(3, "manager1@se.com", password);
-                Account account4 = new Account(4, "assistant1@se.com", password);
-                Account account5 = new Account(5, "chef1@se.com", password);
-                Account account6 = new Account(6, "dispatcher1@se.com", password);
-                accountList.Add(account1);
-                accountList.Add(account2);
-                accountList.Add(account3);
-                accountList.Add(account4);
-                accountList.Add(account5);
-                accountList.Add(account6);
-
                 // Customer
-                Customer customer1 = new Customer(1, "Edgar", "Yew Tee", "87654321", account1);
-                customerList.Add(customer1);
+                Account customerAccount1 = new Account(1, "customer1@se.com", password);
+                allAccounts.Add(customerAccount1);
+                Customer customer1 = new Customer(1, "customer1", "Yew Tee", "87654321", customerAccount1);
+                allCustomers.Add(customer1);
+
+                Account customerAccount2 = new Account(2, "customer1@se.com", password);
+                allAccounts.Add(customerAccount2);
+                Customer customer2 = new Customer(2, "customer2", "Yew Tee", "87654321", customerAccount2);
+                allCustomers.Add(customer1);
 
                 // Manager
-                Manager manager1 = new Manager(1, "Ikmaal", "T1234567A", "Male", "87654321", DateTime.Now, "Status", account3);
-                employeeList.Add(manager1);
+                Account managerAccount1 = new Account(3, "manager1@se.com", password);
+                allAccounts.Add(managerAccount1);
+                Manager manager1 = new Manager(1, "manager1", "T1234567A", "Male", "87654321", DateTime.Now, "Status", managerAccount1, DateTime.Now);
+                allEmployees.Add(manager1);
+
+                // Store Assistant
+                Account storeAssistantAccount1 = new Account(4, "storeAssistant1@se.com", password);
+                allAccounts.Add(storeAssistantAccount1);
+                StoreAssistant storeAssistant1 = new StoreAssistant(1, "storeAssistant1", "T1234567A", "Male", "87654321", DateTime.Now, "Status", storeAssistantAccount1);
+                allStoreAssistants.Add(storeAssistant1);
 
                 // Chef
-                Chef chef1 = new Chef(1, "Daniel", "T1234567A", "Male", "87654321", DateTime.Now, "Status", account5);
-                employeeList.Add(chef1);
+                Account chefAccount1 = new Account(5, "chef1@se.com", password);
+                allAccounts.Add(chefAccount1);
+                Chef chef1 = new Chef(1, "chef1", "T1234567A", "Male", "87654321", DateTime.Now, "Status", chefAccount1);
+                allEmployees.Add(chef1);
+
+                // Dispatcher
+                Account dispatcherAccount1 = new Account(6, "dispatcher1@se.com", password);
+                allAccounts.Add(dispatcherAccount1);
+                Dispatcher dispatcher1 = new Dispatcher(1, "dispatcher1", "T1234567A", "Male", "87654321", DateTime.Now, "Status", dispatcherAccount1);
+                allDispatchers.Add(dispatcher1);
+
+                Account dispatcherAccount2 = new Account(7, "dispatcher1@se.com", password);
+                allAccounts.Add(dispatcherAccount2);
+                Dispatcher dispatcher2 = new Dispatcher(2, "dispatcher2", "T1234567A", "Male", "87654321", DateTime.Now, "Status", dispatcherAccount2);
+                allDispatchers.Add(dispatcher2);
+
+                Account dispatcherAccount3 = new Account(8, "dispatcher1@se.com", password);
+                allAccounts.Add(dispatcherAccount3);
+                Dispatcher dispatcher3 = new Dispatcher(3, "dispatcher2", "T1234567A", "Male", "87654321", DateTime.Now, "Status", dispatcherAccount3);
+                allDispatchers.Add(dispatcher3);
+
+                // FoodItem
+                FoodItem foodItem1 = new FoodItem(1, "Buttermilk Crispy Chicken", "Crispy whole-muscle chicken thigh flavoured with buttermilk packed in a glazed burger bun.", 1, "Available");
+                allFoodItems.Add(foodItem1);
+
+                FoodItem foodItem2 = new FoodItem(2, "Original Angus Cheeseburger", "Made from all the things you love – two slices of melty cheese, slivered onions and 100% Angus beef.", 1, "Available");
+                allFoodItems.Add(foodItem2);
+
+                FoodItem foodItem3 = new FoodItem(3, "Classic Angus Cheese", "Our delicious classic begins with a juicy 100% Angus beef patty between creamy Colby cheese slices.", 1, "Available");
+                allFoodItems.Add(foodItem3);
+
+                FoodItem foodItem4 = new FoodItem(4, "French Fries", "For winning flavour and texture, we only use premium Russet Burbank variety potatoes for that fluffy inside, crispy outside taste of our world-famous fries.", 1, "Available");
+                allFoodItems.Add(foodItem4);
+
+                FoodItem foodItem5 = new FoodItem(5, "Apple Slices", "Go fruity with fresh, ready-to-eat apple slices!", 1, "Available");
+                allFoodItems.Add(foodItem5);
+
+                FoodItem foodItem6 = new FoodItem(6, "Coca-Cola", "Icy cold cola.", 1, "Available");
+                allFoodItems.Add(foodItem6);
+
+                FoodItem foodItem7 = new FoodItem(7, "100% Pure Orange Juice", "Pure orange juice, with Vitamin C.", 1, "Available");
+                allFoodItems.Add(foodItem7);
+
+                // SetMenu
+                SetMenu setMenu1 = new SetMenu(1, "Buttermilk Crispy Chicken Set", "Buttermilk Crispy Chicken with French Fries and Coca-Cola", 1, "Available");
+                setMenu1.add(foodItem1);
+                setMenu1.add(foodItem4);
+                setMenu1.add(foodItem6);
+                allSetMenus.Add(setMenu1);
+
+                SetMenu setMenu2 = new SetMenu(2, "Original Angus Cheeseburger Set", "Original Angus Cheeseburger with Apple Slices and 100% Pure Orange Juice", 1, "Available");
+                setMenu2.add(foodItem2);
+                setMenu2.add(foodItem5);
+                setMenu2.add(foodItem7);
+                allSetMenus.Add(setMenu1);
 
                 // Order
                 Order order1 = new Order(1, DateTime.Now);
-                Order order2 = new Order(2, DateTime.Now);
-                Order order3 = new Order(3, DateTime.Now);
-                Order order4 = new Order(4, DateTime.Now);
-                order4.state = order4.preparingOrderState;
-                orderList.Add(order1);
-                orderList.Add(order2);
-                orderList.Add(order3);
-                orderList.Add(order4);
+                order1.orderItemList.Add(new OrderItem(1, 1, setMenu1));
+                order1.orderItemList.Add(new OrderItem(1, 2, foodItem1));
+                allOrders.Add(order1);
                 customer1.orderList.Add(order1);
+
+                Order order2 = new Order(2, DateTime.Now);
+                order2.orderItemList.Add(new OrderItem(1, 1, setMenu2));
+                order2.orderItemList.Add(new OrderItem(1, 2, foodItem2));
+                allOrders.Add(order2);
                 customer1.orderList.Add(order2);
+
+                Order order3 = new Order(3, DateTime.Now);
+                order3.orderItemList.Add(new OrderItem(1, 1, setMenu1));
+                order3.orderItemList.Add(new OrderItem(1, 2, foodItem3));
+                allOrders.Add(order3);
                 customer1.orderList.Add(order3);
+
+                Order order4 = new Order(4, DateTime.Now);
+                order4.orderItemList.Add(new OrderItem(1, 1, setMenu1));
+                order4.orderItemList.Add(new OrderItem(1, 2, foodItem4));
+                order4.state = order4.preparingOrderState;
+                allOrders.Add(order4);
                 customer1.orderList.Add(order4);
-            }
-
-            // Log user in
-            Object HandleLogin(int loginOption, string email, string password)
-            {
-                Console.Write("Email: ");
-                email = Console.ReadLine();
-
-                Console.Write("Password: ");
-                password = Console.ReadLine();
-
-                Console.WriteLine("");
-
-                Object loginUser = new Object();
-
-                if (loginOption == 1)
-                {
-                    foreach (Customer c in customerList)
-                    {
-                        if (c.account.email == email && c.account.password == password)
-                        {
-                            loginUser = c;
-                            Console.WriteLine("Logged in successfully!");
-                            Console.WriteLine($"Welcome, {c.name}!\n");
-                        }
-                    }
-                }
-                else if (loginOption == 2)
-                {
-                    foreach (Employee e in employeeList)
-                    {
-                        if (e.account.email == email && e.account.password == password)
-                        {
-                            loginUser = e;
-                            Console.WriteLine("Logged in successfully!");
-                            Console.WriteLine($"Welcome, {e.name}!\n");
-                        }
-                    }
-                }
-                else { Console.WriteLine("Please select a valid option!\n"); }
-                return loginUser;
-            }
-
-            void DisplayChefMenu(Chef chef)
-            {
-                while (true)
-                {
-                    Console.WriteLine("Chef Menu");
-                    Console.WriteLine("=========");
-                    Console.WriteLine("1 Prepare Order");
-                    Console.WriteLine("2 Ready Order");
-                    Console.WriteLine("0 Exit");
-                    Console.Write("Please select an option: ");
-
-                    int option = Int32.Parse(Console.ReadLine());
-                    Console.WriteLine("");
-
-                    if (option == 1)
-                    {
-                        Console.WriteLine("Showing all New orders");
-                        List<Order> orderByStateList = GetOrdersByState(new NewOrderState());
-                        DisplayOrders(orderByStateList, new NewOrderState());
-                        Console.Write("Select an order: ");
-
-                        int orderOption = -1;
-                        try
-                        {
-                            orderOption = Int32.Parse(Console.ReadLine());
-
-                            Console.WriteLine("");
-
-                            Order chosenOrder = GetOrderById(orderOption);
-
-                            if (chosenOrder == null)
-                            {
-                                Console.WriteLine("Invalid Order.");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Change Order {orderOption} to Preparing?");
-                                Console.WriteLine("1 Confirm");
-                                Console.WriteLine("2 Cancel");
-                                Console.Write("Select an option: ");
-
-                                int confirmOption = Int32.Parse(Console.ReadLine());
-
-                                Console.WriteLine("");
-
-                                if (confirmOption == 1)
-                                {
-                                    chef.prepareOrder(chosenOrder);
-                                }
-                                else if (confirmOption == 2)
-                                {
-                                    Console.WriteLine($"Cancelled changing Order {orderOption} to Preparing");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Please select a valid option!\n");
-                                }
-                            }
-                        }
-                        catch
-                        {
-                            Console.WriteLine("Please select a valid option!\n");
-                        }
-                    }
-                    else if (option == 2)
-                    {
-                        Console.WriteLine("Showing all Preparing orders");
-                        List<Order> orderByStateList = GetOrdersByState(new NewOrderState());
-                        DisplayOrders(orderByStateList, new NewOrderState());
-                        Console.Write("Select an order: ");
-
-                        int orderOption = Int32.Parse(Console.ReadLine());
-
-                        Console.WriteLine("");
-
-                        Order chosenOrder = GetOrderById(orderOption);
-
-                        if (chosenOrder == null)
-                        {
-                            Console.WriteLine("Invalid Order.");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Change Order {orderOption} to Ready?");
-                            Console.WriteLine("1 Confirm");
-                            Console.WriteLine("2 Cancel");
-                            Console.Write("Select an option: ");
-
-                            int confirmOption = Int32.Parse(Console.ReadLine());
-
-                            Console.WriteLine("");
-
-                            if (confirmOption == 1)
-                            {
-                                chef.readyOrder(chosenOrder);
-                            }
-                            else if (confirmOption == 2)
-                            {
-                                Console.WriteLine($"Cancelled changing Order {orderOption} to Ready");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Please select a valid option!");
-                            }
-                        }
-                    }
-                    else if (option == 0) { break; }
-                    else { Console.WriteLine("Please select a valid option!"); }
-                }
-            }
-
-            List<Order> DisplayOrders(List<Order> displayOrderList, OrderState state)
-            {
-                if (displayOrderList.Count > 0)
-                {
-                    foreach (Order o in displayOrderList)
-                    {
-                        Console.WriteLine($"Order {o.id}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"No {state.ToString()} orders");
-                }
-                return displayOrderList;
-            }
-
-            List<Order> GetOrdersByState(OrderState state)
-            {
-                List<Order> orderByStateList = new List<Order>();
-                if (state != null)
-                {
-                    foreach (Order o in orderList)
-                    {
-                        if (o.state.GetType() == state.GetType())
-                        {
-                            orderByStateList.Add(o);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (Order o in orderList)
-                    {
-                        orderByStateList.Add(o);
-                    }
-                }
-                return orderByStateList;
-            }
-
-            Order GetOrderById(int id)
-            {
-                foreach (Order o in orderList)
-                {
-                    if (o.id == id)
-                    {
-                        return o;
-                    }
-                }
-                return null;
             }
         }
     }

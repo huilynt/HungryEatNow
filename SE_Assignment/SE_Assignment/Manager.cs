@@ -6,9 +6,10 @@ namespace SE_Assignment
 {
     class Manager : Employee
     {
-        public DateTime StartDate { get; set; }
+        public DateTime startDate { get; set; }
 
-        public Manager(int id, string name, string nric, string gender, string contactNumber, DateTime dateJoined, string status, Account account) : base(id, name, nric, gender, contactNumber, dateJoined, status, account)
+
+        public Manager(int id, string name, string nric, string gender, string contactNumber, DateTime dateJoined, string status, Account account, DateTime startDate) : base(id, name, nric, gender, contactNumber, dateJoined, status, account)
         {
             this.id = id;
             this.name = name;
@@ -18,6 +19,7 @@ namespace SE_Assignment
             this.dateJoined = dateJoined;
             this.status = status;
             this.account = account;
+            this.startDate = startDate;
         }
         public void createMenu() { }
 

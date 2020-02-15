@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static SE_Assignment.MainFunctions;
 
 namespace SE_Assignment
 {
@@ -8,9 +9,7 @@ namespace SE_Assignment
     {
         private Order order;
 
-        public NewOrderState()
-        {
-        }
+        public NewOrderState() { }
 
         public NewOrderState(Order order)
         {
@@ -24,35 +23,44 @@ namespace SE_Assignment
 
         public void cancelOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cancelling Order {order.id}...");
+            order.state = order.cancelledOrderState;
+            foreach (Observer o in order.observers)
+            {
+                order.removeObserver(o);
+            }
+            Console.WriteLine($"Cancelled Order {order.id}\n");
         }
 
         public void deliverOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot Dispatch New Order\n");
         }
 
         public void dispatchOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot Dispatch New Order\n");
         }
 
         public void newOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Order {order.id} is already New\n");
         }
 
         public void prepareOrder()
         {
-            Console.WriteLine($"Preparing Order {order.id}");
+            Console.WriteLine($"Preparing Order {order.id}...");
             order.state = order.preparingOrderState;
-            Console.WriteLine($"Changed Order {order.id} to Preparing");
-            Console.WriteLine("");
+            foreach (Dispatcher d in allDispatchers)
+            {
+                order.registerObserver(d);
+            }
+            Console.WriteLine($"Changed Order {order.id} to Preparing\n");
         }
 
         public void readyOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot change New Order {order.id} to Ready\n");
         }
 
         public override string ToString()

@@ -27,7 +27,7 @@ namespace SE_Assignment
         public OrderState archivedOrderState { get; set; }
         public OrderState state { get; set; }
 
-        private List<Observer> observers = new List<Observer>();
+        public List<Observer> observers = new List<Observer>();
 
         public Order(int id, DateTime createDateTime)
         {
@@ -48,6 +48,8 @@ namespace SE_Assignment
             archivedOrderState = new ArchivedOrderState(this);
 
             state = newOrderState;
+
+            observers = new List<Observer>();
         }
 
         public void registerObserver(Observer o)

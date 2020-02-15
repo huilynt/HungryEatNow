@@ -4,11 +4,12 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class Dispatcher : Employee
+    class Dispatcher : Employee, Observer
     {
         public double currentMonthCommision { get; set; }
+        private Order order;
 
-        public Dispatcher(int id, string name, string nric, string gender, string contactNumber, DateTime dateJoined, string status, Account account, double currentMonthCommision) : base(id, name, nric, gender, contactNumber, dateJoined, status, account)
+        public Dispatcher(int id, string name, string nric, string gender, string contactNumber, DateTime dateJoined, string status, Account account) : base(id, name, nric, gender, contactNumber, dateJoined, status, account)
         {
             this.id = id;
             this.name = name;
@@ -18,7 +19,9 @@ namespace SE_Assignment
             this.dateJoined = dateJoined;
             this.status = status;
             this.account = account;
-            this.currentMonthCommision = currentMonthCommision;
+            this.currentMonthCommision = 0.00;
+
+            this.order = null;
         }
 
         public void dispatchOrder(Order order)
@@ -29,6 +32,11 @@ namespace SE_Assignment
         public void deliverOrder(Order order)
         {
             order.dispatchedOrderState.deliverOrder();
+        }
+
+        public void update(Subject sub)
+        {
+            this.order = (Order)sub;
         }
     }
 }
