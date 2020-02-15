@@ -4,8 +4,10 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class MenuItem : Item
+    class SetMeals
     {
-        public int size { get; set; }
+
+        public List<FoodItem> setMenuItems = new List<FoodItem>();
+
     }
 }

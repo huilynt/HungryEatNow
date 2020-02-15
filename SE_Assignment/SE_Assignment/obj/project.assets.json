@@ -688,23 +688,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\apple\\.nuget\\packages\\": {},
+    "C:\\Users\\edgar\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\apple\\Desktop\\SE\\Assignment\\SE_Assignment_Group_2\\SE_Assignment\\SE_Assignment\\SE_Assignment.csproj",
+      "projectUniqueName": "C:\\Users\\edgar\\Desktop\\ICT\\Sem 3.2\\Software Engineering (1_SE_011863)\\Assignment\\SE_Assignment\\SE_Assignment\\SE_Assignment.csproj",
       "projectName": "SE_Assignment",
-      "projectPath": "C:\\Users\\apple\\Desktop\\SE\\Assignment\\SE_Assignment_Group_2\\SE_Assignment\\SE_Assignment\\SE_Assignment.csproj",
-      "packagesPath": "C:\\Users\\apple\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\apple\\Desktop\\SE\\Assignment\\SE_Assignment_Group_2\\SE_Assignment\\SE_Assignment\\obj\\",
+      "projectPath": "C:\\Users\\edgar\\Desktop\\ICT\\Sem 3.2\\Software Engineering (1_SE_011863)\\Assignment\\SE_Assignment\\SE_Assignment\\SE_Assignment.csproj",
+      "packagesPath": "C:\\Users\\edgar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\edgar\\Desktop\\ICT\\Sem 3.2\\Software Engineering (1_SE_011863)\\Assignment\\SE_Assignment\\SE_Assignment\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\apple\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\edgar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -7,6 +7,7 @@ namespace SE_Assignment
     class Manager : Employee
     {
         public DateTime StartDate { get; set; }
+        
 
         public Manager(int id, string name, string nric, string gender, string contactNumber, DateTime dateJoined, string status, Account account) : base(id, name, nric, gender, contactNumber, dateJoined, status, account)
         {
@@ -19,10 +20,18 @@ namespace SE_Assignment
             this.status = status;
             this.account = account;
         }
-        public void createMenu() { }
 
-        public void createMenuItem() { }
+        
+        
+        public List<FoodItem> addItem(List<FoodItem>itemList, FoodItem selection)
+        {
+            List<FoodItem> modifiedList = new List<FoodItem>();
 
-        public void createFoodItem() { }
+
+
+            return modifiedList;
+
+        }
+
     }
 }

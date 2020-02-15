@@ -7,33 +7,20 @@ namespace SE_Assignment
     class Menu
     {
 
-        private int menuID;
-        public int MenuID
-        {
-            get { return menuID; }
-            set { menuID = value; }
-        }
+        public int menuID { get; set; }
+        public int getSize { get; set; }
 
-        private int size;
-        public int Size
-        {
-            get { return size; }
-            set { size = value; }
-        }
+        //List<SetMeals> SetMenuList = new List<SetMeals>();
+        //List<FoodItem> FoodItemList = new List<FoodItem>();
+        public List<SetMeals> setMenuList = new List<SetMeals>();
 
-        FoodItem foodItem = new FoodItem();
+        public List<FoodItem> foodItemList = new List<FoodItem>();
         
-        public void updateMenu()
+        public Menu(List<SetMeals> setList, List<FoodItem> foodList)
         {
-          
+            this.setMenuList = setList;
+            this.foodItemList = foodList;
         }
-        public void removeMenu()
-        {
 
-        }
-        public void displayMenu()
-        {
-
-        }
     }
 }

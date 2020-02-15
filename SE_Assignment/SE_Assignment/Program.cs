@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace SE_Assignment
 {
     class Program
@@ -12,14 +13,11 @@ namespace SE_Assignment
             List<Customer> customerList = new List<Customer>();
             List<Employee> employeeList = new List<Employee>();
             List<Order> orderList = new List<Order>();
+            List<FoodItem> fooditemList = new List<FoodItem>();
+            List<SetMeals> setMenu = new List<SetMeals>();
+            managerFunctions Mfunctions = new managerFunctions();
 
             InitData();
-            //foreach (Account c in accountList)
-            //{
-            //    Console.WriteLine(c.email);
-            //}
-            //Console.WriteLine(accountList.Count);
-
             Object user = null;
             while (true)
             {
@@ -43,6 +41,10 @@ namespace SE_Assignment
                         if (user is Chef)
                         {
                             DisplayChefMenu((Chef)user);
+                        }
+                        else if (user is Manager)
+                        {
+                            Mfunctions.DisplayManagerMainMenu((Manager) user);
                         }
                     }
                     else if (loginOption == 0) { break; }
@@ -74,6 +76,7 @@ namespace SE_Assignment
                 Account account4 = new Account(4, "assistant1@se.com", password);
                 Account account5 = new Account(5, "chef1@se.com", password);
                 Account account6 = new Account(6, "dispatcher1@se.com", password);
+         
                 accountList.Add(account1);
                 accountList.Add(account2);
                 accountList.Add(account3);
@@ -88,7 +91,7 @@ namespace SE_Assignment
                 // Manager
                 Manager manager1 = new Manager(1, "Ikmaal", "T1234567A", "Male", "87654321", DateTime.Now, "Status", account3);
                 employeeList.Add(manager1);
-
+                
                 // Chef
                 Chef chef1 = new Chef(1, "Daniel", "T1234567A", "Male", "87654321", DateTime.Now, "Status", account5);
                 employeeList.Add(chef1);
@@ -107,6 +110,31 @@ namespace SE_Assignment
                 customer1.orderList.Add(order2);
                 customer1.orderList.Add(order3);
                 customer1.orderList.Add(order4);
+
+                //Food items 
+                FoodItem item1 = new FoodItem(1, "Chicken Burger", "Chicklen Burger",10 , "available" );
+                FoodItem item2 = new FoodItem(2, "Fish Burger", "Salmon Burger", 5, "available");
+                FoodItem item3 = new FoodItem(3, "Beef Burger", "Angus beef burger", 5, "available");
+                FoodItem item4 = new FoodItem(4, "Hashbrown", "Potato Hasbrowns", 5, "available");
+                FoodItem item5 = new FoodItem(5, "French Fries", "Yukon gold potato", 5, "available");
+                FoodItem item6 = new FoodItem(6, "Salad", "Caesar Salad" , 5, "available");
+
+                FoodItem[] value = { item1, item2, item3, item4, item5, item6};
+
+                foreach(FoodItem item in value)
+                {
+                    if(item.status == "available")
+                    {
+                        fooditemList.Add(item);
+                    }
+                }
+
+
+                SetMeals set1 = new SetMeals()
+
+
+
+                Menu menu = new Menu(setMenu, fooditemList);
             }
 
             // Log user in
@@ -260,7 +288,6 @@ namespace SE_Assignment
                     else { Console.WriteLine("Please select a valid option!"); }
                 }
             }
-
             List<Order> DisplayOrders(List<Order> displayOrderList, OrderState state)
             {
                 if (displayOrderList.Count > 0)
@@ -311,6 +338,8 @@ namespace SE_Assignment
                 }
                 return null;
             }
+
+
         }
     }
 }
