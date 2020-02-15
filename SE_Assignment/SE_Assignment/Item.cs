@@ -9,14 +9,16 @@ namespace SE_Assignment
         public int id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public double price { get; set; }
         public int unit { get; set; }
         public string status { get; set; }
 
-        public Item(int id, string name, string description, int unit, string status)
+        public Item(int id, string name, string description, double price, int unit, string status)
         {
             this.id = id;
             this.name = name;
             this.description = description;
+            this.price = price;
             this.unit = unit;
             this.status = status;
         }

@@ -72,7 +72,6 @@ namespace SE_Assignment
 
 
         }
-
         public static void ManagerMenuSet(Manager manager)
         {
             bool isEditSet = true;

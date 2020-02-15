@@ -6,20 +6,8 @@ namespace SE_Assignment
 {
     class FoodItem : Item
     {
-        public FoodItem(int id, string name, string description, int unit, string status = "available") : base(id, name, description, unit, status)
-        {
 
-        }
-
-        public void update()
-        {
-
-        }
-        public void remove()
-        {
-
-        }
-        public void display()
+        public FoodItem(int id, string name, string description,double price, int unit, string status = "available") : base(id, name, description,price, unit, status)
         {
 
         }
@@ -28,6 +16,21 @@ namespace SE_Assignment
         {
             return $"Name: {name}\n" +
                 $"Description: {description}\n";
+        }
+
+        public bool isExist(List<FoodItem> list, FoodItem item)
+        {
+            bool exists = false;
+
+            foreach( FoodItem fi in list)
+            {
+                if (fi.Equals(item))
+                {
+                    exists = true;
+                }
+            }
+
+            return exists;
         }
     }
 }

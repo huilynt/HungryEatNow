@@ -28,6 +28,47 @@ namespace SE_Assignment
             return modifiedList;
 
         }
+            
+        public void DisplayFoodList(List<FoodItem> fList)
+        {
+            int count = 1;
+            Console.WriteLine("= Available Food Items =\n" +
+                              "========================");
+            foreach (FoodItem food in fList)
+            {
+                Console.WriteLine("{0}) {1}", count, food.name);
+                count++;
+            }
+            //Console.WriteLine("");
+        }
 
+        public void DisplayFoodItem(FoodItem selected, bool show)
+        {
+            
+
+            if (show == true)
+            {
+                Console.WriteLine("= Food Item Details =\n" +
+                              "=====================");
+                Console.WriteLine("-Name: {0}\n" +
+                                  "-Description: {1}\n" +
+                                  "-Price: {2}\n" +
+                                  "-Unit: {3}\n" +
+                                  "-Status: {4}\n" +
+                                  "-Type 'Done' to exit", selected.name, selected.description, selected.price, selected.unit, selected.status);
+            }
+            else
+            {
+                Console.WriteLine("= Food Item Details =\n" +
+                              "=====================");
+                Console.WriteLine("-Name: {0}\n" +
+                                  "-Description: {1}\n" +
+                                  "-Price: {2}\n" +
+                                  "-Unit: {3}\n" +
+                                  "-Status: {4}", selected.name, selected.description, selected.price, selected.unit, selected.status);
+            }
+            Console.WriteLine("");
+        }
+        
     }
 }

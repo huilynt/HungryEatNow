@@ -9,29 +9,21 @@ namespace SE_Assignment
         public int size { get; set; }
         public List<FoodItem> foodItemList { get; set; }
 
-        public SetMenu(int id, string name, string description, int unit, string status) : base(id, name, description, unit, status)
+        public SetMenu(int id, string name, string description,double price, int unit, string status) : base(id, name, description,price, unit, status)
         {
             this.foodItemList = new List<FoodItem>();
             this.size = foodItemList.Count;
         }
+        //public SetMenu(int id, string name, string description, int unit, string status)
+        //{
+        //    this.foodItemList = new List<FoodItem>();
+        //    this.size = foodItemList.Count;
+        //}
 
         public void add(FoodItem foodItem)
         {
             foodItemList.Add(foodItem);
             this.size = foodItemList.Count;
-        }
-
-        public void update()
-        {
-
-        }
-        public void remove()
-        {
-
-        }
-        public void display()
-        {
-
         }
 
         public override string ToString()
