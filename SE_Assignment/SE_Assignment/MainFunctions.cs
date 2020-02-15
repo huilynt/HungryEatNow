@@ -109,8 +109,8 @@ namespace SE_Assignment
                     {
                         // 2. System displays Order(s) with ‘Preparing’ Status
                         Console.WriteLine("Showing all Preparing orders");
-                        List<Order> orderByStateList = GetOrdersByState(new NewOrderState());
-                        DisplayOrders(orderByStateList, new NewOrderState());
+                        List<Order> orderByStateList = GetOrdersByState(new PreparingOrderState());
+                        DisplayOrders(orderByStateList, new PreparingOrderState());
                         Console.Write("Select an order: ");
 
                         try
@@ -149,7 +149,7 @@ namespace SE_Assignment
                                 // 7.2 Use case ends
                                 else if (confirmOption == 2)
                                 {
-                                    Console.WriteLine($"Cancelled changing Order {orderOption} to Ready");
+                                    Console.WriteLine($"Cancel changing Order {orderOption} to Ready");
                                 }
                                 else
                                 {

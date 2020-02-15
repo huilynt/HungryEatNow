@@ -10,8 +10,6 @@ namespace SE_Assignment
         {
             InitData();
 
-
-
             Object user = null;
             while (true)
             {
@@ -25,6 +23,7 @@ namespace SE_Assignment
                 try
                 {
                     loginOption = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("");
 
                     string email = "";
                     string password = "";
@@ -47,8 +46,6 @@ namespace SE_Assignment
                 {
                     Console.WriteLine("Please enter a valid option!\n");
                 }
-
-
             }
 
             // Initialize all data here
