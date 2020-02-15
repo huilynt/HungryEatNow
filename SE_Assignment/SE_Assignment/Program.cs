@@ -1,6 +1,7 @@
 ﻿using System;
 using static SE_Assignment.MainFunctions;
 using static SE_Assignment.HelperFunctions;
+using static SE_Assignment.managerFunctions;
 
 namespace SE_Assignment
 {
@@ -34,6 +35,10 @@ namespace SE_Assignment
                         if (user is Chef)
                         {
                             DisplayChefMenu((Chef)user);
+                        }
+                        else if (user is Manager)
+                        {
+                            DisplayManagerMainMenu((Manager)user);
                         }
                     }
                     else if (loginOption == 0) { break; }
