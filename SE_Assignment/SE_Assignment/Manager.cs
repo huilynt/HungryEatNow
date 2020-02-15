@@ -21,14 +21,11 @@ namespace SE_Assignment
             this.account = account;
         }
 
-        
+        public Menu menu = new Menu(List<FoodItem>, List<SetMeals> setMenu);
         
         public List<FoodItem> addItem(List<FoodItem>itemList, FoodItem selection)
         {
             List<FoodItem> modifiedList = new List<FoodItem>();
-
-
-
             return modifiedList;
 
         }
