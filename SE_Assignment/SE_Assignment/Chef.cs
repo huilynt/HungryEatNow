@@ -21,12 +21,12 @@ namespace SE_Assignment
 
         public void prepareOrder(Order order)
         {
-            order.newOrderState.prepareOrder();
+            order.state.prepareOrder();
         }
 
         public void readyOrder(Order order)
         {
-            order.preparingOrderState.readyOrder();
+            order.state.readyOrder();
         }
     }
 }

@@ -22,8 +22,6 @@ namespace SE_Assignment
             this.startDate = startDate;
         }
 
-
-
         public List<FoodItem> addItem(List<FoodItem> itemList, FoodItem selection)
         {
             List<FoodItem> modifiedList = new List<FoodItem>();
