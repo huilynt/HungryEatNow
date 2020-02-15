@@ -25,9 +25,6 @@ namespace SE_Assignment
         public List<FoodItem> addItem(List<FoodItem> itemList, FoodItem selection)
         {
             List<FoodItem> modifiedList = new List<FoodItem>();
-
-
-
             return modifiedList;
 
         }
