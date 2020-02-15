@@ -21,10 +21,16 @@ namespace SE_Assignment
             this.account = account;
             this.startDate = startDate;
         }
-        public void createMenu() { }
 
-        public void createMenuItem() { }
+        public List<FoodItem> addItem(List<FoodItem> itemList, FoodItem selection)
+        {
+            List<FoodItem> modifiedList = new List<FoodItem>();
 
-        public void createFoodItem() { }
+
+
+            return modifiedList;
+
+        }
+
     }
 }

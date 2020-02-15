@@ -6,7 +6,7 @@ namespace SE_Assignment
 {
     class FoodItem : Item
     {
-        public FoodItem(int id, string name, string description, int unit, string status) : base(id, name, description, unit, status)
+        public FoodItem(int id, string name, string description, int unit, string status = "available") : base(id, name, description, unit, status)
         {
 
         }

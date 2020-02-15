@@ -1,6 +1,7 @@
 ﻿using System;
 using static SE_Assignment.MainFunctions;
 using static SE_Assignment.HelperFunctions;
+using static SE_Assignment.managerFunctions;
 
 namespace SE_Assignment
 {
@@ -9,7 +10,6 @@ namespace SE_Assignment
         static void Main(string[] args)
         {
             InitData();
-
             Object user = null;
             while (true)
             {
@@ -34,6 +34,10 @@ namespace SE_Assignment
                         if (user is Chef)
                         {
                             DisplayChefMenu((Chef)user);
+                        }
+                        else if (user is Manager)
+                        {
+                            DisplayManagerMainMenu((Manager)user);
                         }
                     }
                     else if (loginOption == 0) { break; }
@@ -99,35 +103,35 @@ namespace SE_Assignment
                 allDispatchers.Add(dispatcher3);
 
                 // FoodItem
-                FoodItem foodItem1 = new FoodItem(1, "Buttermilk Crispy Chicken", "Crispy whole-muscle chicken thigh flavoured with buttermilk packed in a glazed burger bun.", 1, "Available");
+                FoodItem foodItem1 = new FoodItem(1, "Buttermilk Crispy Chicken", "Crispy whole-muscle chicken thigh flavoured with buttermilk packed in a glazed burger bun.", 1, "available");
                 allFoodItems.Add(foodItem1);
 
-                FoodItem foodItem2 = new FoodItem(2, "Original Angus Cheeseburger", "Made from all the things you love – two slices of melty cheese, slivered onions and 100% Angus beef.", 1, "Available");
+                FoodItem foodItem2 = new FoodItem(2, "Original Angus Cheeseburger", "Made from all the things you love – two slices of melty cheese, slivered onions and 100% Angus beef.", 1, "available");
                 allFoodItems.Add(foodItem2);
 
-                FoodItem foodItem3 = new FoodItem(3, "Classic Angus Cheese", "Our delicious classic begins with a juicy 100% Angus beef patty between creamy Colby cheese slices.", 1, "Available");
+                FoodItem foodItem3 = new FoodItem(3, "Classic Angus Cheese", "Our delicious classic begins with a juicy 100% Angus beef patty between creamy Colby cheese slices.", 1, "available");
                 allFoodItems.Add(foodItem3);
 
-                FoodItem foodItem4 = new FoodItem(4, "French Fries", "For winning flavour and texture, we only use premium Russet Burbank variety potatoes for that fluffy inside, crispy outside taste of our world-famous fries.", 1, "Available");
+                FoodItem foodItem4 = new FoodItem(4, "French Fries", "For winning flavour and texture, we only use premium Russet Burbank variety potatoes for that fluffy inside, crispy outside taste of our world-famous fries.", 1, "available");
                 allFoodItems.Add(foodItem4);
 
-                FoodItem foodItem5 = new FoodItem(5, "Apple Slices", "Go fruity with fresh, ready-to-eat apple slices!", 1, "Available");
+                FoodItem foodItem5 = new FoodItem(5, "Apple Slices", "Go fruity with fresh, ready-to-eat apple slices!", 1, "available");
                 allFoodItems.Add(foodItem5);
 
-                FoodItem foodItem6 = new FoodItem(6, "Coca-Cola", "Icy cold cola.", 1, "Available");
+                FoodItem foodItem6 = new FoodItem(6, "Coca-Cola", "Icy cold cola.", 1, "available");
                 allFoodItems.Add(foodItem6);
 
-                FoodItem foodItem7 = new FoodItem(7, "100% Pure Orange Juice", "Pure orange juice, with Vitamin C.", 1, "Available");
+                FoodItem foodItem7 = new FoodItem(7, "100% Pure Orange Juice", "Pure orange juice, with Vitamin C.", 1, "available");
                 allFoodItems.Add(foodItem7);
 
                 // SetMenu
-                SetMenu setMenu1 = new SetMenu(1, "Buttermilk Crispy Chicken Set", "Buttermilk Crispy Chicken with French Fries and Coca-Cola", 1, "Available");
+                SetMenu setMenu1 = new SetMenu(1, "Buttermilk Crispy Chicken Set", "Buttermilk Crispy Chicken with French Fries and Coca-Cola", 1, "available");
                 setMenu1.add(foodItem1);
                 setMenu1.add(foodItem4);
                 setMenu1.add(foodItem6);
                 allSetMenus.Add(setMenu1);
 
-                SetMenu setMenu2 = new SetMenu(2, "Original Angus Cheeseburger Set", "Original Angus Cheeseburger with Apple Slices and 100% Pure Orange Juice", 1, "Available");
+                SetMenu setMenu2 = new SetMenu(2, "Original Angus Cheeseburger Set", "Original Angus Cheeseburger with Apple Slices and 100% Pure Orange Juice", 1, "available");
                 setMenu2.add(foodItem2);
                 setMenu2.add(foodItem5);
                 setMenu2.add(foodItem7);
