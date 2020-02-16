@@ -12,6 +12,7 @@ namespace SE_Assignment
         public double price { get; set; }
         public int unit { get; set; }
         public string status { get; set; }
+        public Category category;
 
         public Item(int itemId, string name, string description, double price, int unit, string status)
         {
@@ -26,6 +27,8 @@ namespace SE_Assignment
         public Item()
         {
         }
+
+        public void setCategory() { }
 
         public void update() { }
         public void remove() { }

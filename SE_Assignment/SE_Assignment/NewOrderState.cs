@@ -16,22 +16,24 @@ namespace SE_Assignment
             this.order = order;
         }
 
-        public void archiveOrder()
-        {
-            throw new NotImplementedException();
-        }
-
         public void cancelOrder()
         {
 
-            order.state = order.cancelledOrderState;
-            foreach (Observer o in order.observers)
+            if (DateTime.Now > order.deliveryDateTime)
             {
-                order.removeObserver(o);
+                order.state = order.cancelledOrderState;
+                foreach (Observer o in order.observers)
+                {
+                    order.removeObserver(o);
+                }
+                order.refundCustomer();
+                order.archiveOrder();
+                Console.WriteLine($"Cancelled Order {order.id}\n");
             }
-            order.refundCustomer();
-            order.archiveOrder();
-            Console.WriteLine($"Cancelled Order {order.id}\n");
+            else
+            {
+                Console.WriteLine("Cannot cancel order.\n");
+            }
         }
 
         public void confirmOrder()

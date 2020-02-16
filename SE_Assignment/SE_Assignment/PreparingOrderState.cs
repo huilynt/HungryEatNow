@@ -17,7 +17,21 @@ namespace SE_Assignment
 
         public void cancelOrder()
         {
-            Console.WriteLine($"Cannot cancel Preparing Order\n");
+            if (DateTime.Now > order.deliveryDateTime)
+            {
+                order.state = order.cancelledOrderState;
+                foreach (Observer o in order.observers)
+                {
+                    order.removeObserver(o);
+                }
+                order.refundCustomer();
+                order.archiveOrder();
+                Console.WriteLine($"Cancelled Order {order.id}\n");
+            }
+            else
+            {
+                Console.WriteLine("Cannot cancel order.\n");
+            }
         }
 
         public void confirmOrder()

@@ -15,7 +15,21 @@ namespace SE_Assignment
 
         public void cancelOrder()
         {
-            Console.WriteLine($"Cannot cancel Ready Order\n");
+            if (DateTime.Now > order.deliveryDateTime)
+            {
+                order.state = order.cancelledOrderState;
+                foreach (Observer o in order.observers)
+                {
+                    order.removeObserver(o);
+                }
+                order.refundCustomer();
+                order.archiveOrder();
+                Console.WriteLine($"Cancelled Order {order.id}\n");
+            }
+            else
+            {
+                Console.WriteLine("Cannot cancel order.\n");
+            }
         }
 
         public void confirmOrder()
@@ -30,6 +44,7 @@ namespace SE_Assignment
 
         public void dispatchOrder()
         {
+            // assign first dispatcher and remove the rest
             Dispatcher dispatcher = (Dispatcher)order.observers[0];
             dispatcher.update(order);
             foreach (Observer o in order.observers)

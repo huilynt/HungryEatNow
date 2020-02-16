@@ -6,37 +6,51 @@ namespace SE_Assignment
 {
     class Payment
     {
-        public int id { get; set; }
-        public DateTime dateTime { get; set; }
-        public string type { get; set; }
-        public double amount { get; set; }
+        public int receiptNumber { get; set; }
+        public DateTime paymentDateTime { get; set; }
+        public string paymentType { get; set; }
+        public double paymentAmount { get; set; }
         public Order order { get; set; }
 
-        public Payment(int id, DateTime dateTime, string type, Order order)
+        public Payment(int receiptNumber, DateTime dateTime, string type, Order order)
         {
-            this.id = id;
-            this.dateTime = dateTime;
-            this.type = type;
+            this.receiptNumber = receiptNumber;
+            this.paymentDateTime = dateTime;
+            this.paymentType = type;
             this.order = order;
 
+
             double amt = 0;
-            foreach (OrderItem oi in order.orderItemList)
+            if (order != null)
             {
-                if (oi.item != null)
+
+
+                foreach (OrderItem oi in order.orderItemList)
                 {
-                    amt += oi.item.price * oi.quantity;
+                    if (oi.item != null)
+                    {
+                        amt += oi.item.price * oi.quantity;
+                    }
+                    else if (oi.setMenu != null)
+                    {
+                        amt += oi.setMenu.price * oi.quantity;
+                    }
                 }
-                else if (oi.setMenu != null)
-                {
-                    amt += oi.setMenu.price * oi.quantity;
-                }
-            }
-            if (order.deliveryType.ToLower() == "express")
-            {
+
                 amt += order.deliveryCharge;
+
+                double gstAmt = amt * 7 / 100;
+
+                amt += gstAmt;
+
             }
 
-            this.amount = 0;
+            this.paymentAmount = amt;
+        }
+
+        public void printReceipt()
+        {
+            // implementation
         }
     }
 }

@@ -57,6 +57,8 @@ namespace SE_Assignment
                 }
             }
 
+            Console.ReadKey();
+
             // Initialize all data here
             void InitData()
             {
@@ -158,33 +160,36 @@ namespace SE_Assignment
                 // Order               
                 Order order1 = new Order(1, DateTime.Now);
                 Payment payment1 = new Payment(1, DateTime.Now, "Online", order1);
+                order1.payment = payment1;
                 order1.orderItemList.Add(new OrderItem(1, 1, setMenu1));
                 order1.orderItemList.Add(new OrderItem(1, 2, foodItem1));
                 allOrders.Add(order1);
-                customer1.orderList.Add(order1);
+                //customer1.orderList.Add(order1);
 
                 Order order2 = new Order(2, DateTime.Now);
+                Payment payment2 = new Payment(2, DateTime.Now, "Online", order2);
+                order2.payment = payment2;
                 order2.orderItemList.Add(new OrderItem(1, 1, setMenu2));
                 order2.orderItemList.Add(new OrderItem(1, 2, foodItem2));
                 allOrders.Add(order2);
-                customer1.orderList.Add(order2);
+                //customer1.orderList.Add(order2);
 
                 Order order3 = new Order(3, DateTime.Now);
+                Payment payment3 = new Payment(3, DateTime.Now, "Online", order3);
+                order3.payment = payment3;
                 order3.orderItemList.Add(new OrderItem(1, 1, setMenu1));
                 order3.orderItemList.Add(new OrderItem(1, 2, foodItem3));
                 allOrders.Add(order3);
                 customer1.orderList.Add(order3);
 
                 Order order4 = new Order(4, DateTime.Now);
+                Payment payment4 = new Payment(4, DateTime.Now, "Online", order4);
+                order4.payment = payment4;
                 order4.orderItemList.Add(new OrderItem(1, 1, setMenu1));
                 order4.orderItemList.Add(new OrderItem(1, 2, foodItem4));
                 order4.state = order4.preparingOrderState;
                 allOrders.Add(order4);
-                customer1.orderList.Add(order4);
-
-                location.Add(new Branch("Yew Tee"));
-                location.Add(new Branch("Beauty World"));
-
+                //customer1.orderList.Add(order4);
             }
         }
     }

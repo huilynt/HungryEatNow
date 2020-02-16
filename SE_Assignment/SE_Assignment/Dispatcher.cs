@@ -38,5 +38,9 @@ namespace SE_Assignment
         {
             this.order = (Order)sub;
         }
+        public void resetCommission()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

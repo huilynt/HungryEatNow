@@ -51,5 +51,9 @@ namespace SE_Assignment
                 setMenuItems +
                 "\n";
         }
+
+        public void update() { }
+        public void remove() { }
+        public void display() { }
     }
 }

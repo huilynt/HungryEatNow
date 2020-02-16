@@ -19,7 +19,21 @@ namespace SE_Assignment
 
         public void cancelOrder()
         {
-            Console.WriteLine($"Cannot cancel Dispatched Order\n");
+            if (DateTime.Now > order.deliveryDateTime)
+            {
+                order.state = order.cancelledOrderState;
+                foreach (Observer o in order.observers)
+                {
+                    order.removeObserver(o);
+                }
+                order.refundCustomer();
+                order.archiveOrder();
+                Console.WriteLine($"Cancelled Order {order.id}\n");
+            }
+            else
+            {
+                Console.WriteLine("Cannot cancel order.\n");
+            }
         }
 
         public void confirmOrder()
@@ -29,10 +43,22 @@ namespace SE_Assignment
 
         public void deliverOrder()
         {
+            sendEmail();
+            sendCommission();
             order.deliveryDateTime = DateTime.Now;
             order.state = order.readyOrderState;
             order.notifyObservers();
             Console.WriteLine($"Changed Order {order.id} to Delivered.\n");
+        }
+
+        private void sendCommission()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void sendEmail()
+        {
+            throw new NotImplementedException();
         }
 
         public void dispatchOrder()

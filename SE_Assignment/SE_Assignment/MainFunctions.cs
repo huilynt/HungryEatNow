@@ -16,35 +16,31 @@ namespace SE_Assignment
         public static List<Dispatcher> allDispatchers = new List<Dispatcher>();
         public static List<Item> allFoodItems = new List<Item>();
         public static List<SetMenu> allSetMenus = new List<SetMenu>();
-        public static List<Branch> location = new List<Branch>();
+
+        public static List<Branch> location = new List<Branch>() { new Branch("Yew Tee"), new Branch("Beauty World") };
         public static List<string> escapePhrase = new List<string> { "exit", "done" };
         public static List<string> deliveryMethods = new List<string> { "Express", "Normal" };
+        public static List<Order> customerOrderList = new List<Order>();
+        public static Func<string, bool> isEscape = (x) => escapePhrase.Exists(p => p == x);
 
 
         // Function 1
-        public static List<Order> customerOrderList = new List<Order>();
-        public static Func<string, bool> isEscape = (x) => escapePhrase.Exists(p => p == x);
-        // Function 1 - Huilin
         // Allow a customer to create a new order (i.e., choose food items or menu, select restaurant, select express delivery, etc.) and pay by credit card or other online means
         public static void DisplayCustomerMenu(Customer customer)
         {
             int count = 0;
-            //Func<string, bool> isEscape = (x) => escapePhrase.Exists(p => p == x);
-            OrderItem tempSetMenu = new OrderItem(1, 1, new SetMenu());
-            OrderItem tempItem = new OrderItem(1, 1, new Item());
+            int orderid = 1;
+
             bool isLoggin = true;
             while (isLoggin == true)
             {
                 Console.WriteLine("= Customer Menu =\n" +
                                   "=================");
-
                 Console.WriteLine("1. New Order\n" +
                                   "2. Check Order\n" +
+                                  "3. Checkout\n" +
                                   "0. Log out");
-
                 Console.Write("Please select an option: ");
-
-
                 try
                 {
                     string option = Console.ReadLine();
@@ -53,15 +49,14 @@ namespace SE_Assignment
                     {
                         break;
                     }
-
                     switch (int.Parse(option))
                     {
                         case 1:
                             bool ordering = true;
-                            int orderid = 0;
+
                             while (ordering == true)
                             {
-                                Order newOrder = new Order(orderid + 1, DateTime.Now);
+                                Order newOrder = new Order(orderid, DateTime.Now);
                                 Console.WriteLine("= Delivery Method =\n" +
                                                   "===================");
                                 count = 1;
@@ -80,7 +75,6 @@ namespace SE_Assignment
                                 }
 
                                 newOrder.deliveryType = deliveryMethods[dChoice - 1];
-
                                 Console.Write("Enter delivery address: ");
                                 customer.address = Console.ReadLine();
 
@@ -95,15 +89,17 @@ namespace SE_Assignment
                                 Console.Write("Select restaurant: ");
                                 var restChoice = location[int.Parse(Console.ReadLine()) - 1];
                                 bool isSelecting = true;
+
+                                OrderItem temp = new OrderItem(orderid, 0, (Item)null);
                                 while (isSelecting == true)
                                 {
+
                                     Console.WriteLine("= Available Menu =\n" +
                                                       "===============");
                                     Console.WriteLine("1. Set Menu\n" +
                                                       "2. Ala Carte");
                                     Console.Write("Select Menu: ");
                                     var menuKind = Console.ReadLine();
-
                                     try
                                     {
                                         if (isEscape(menuKind.ToLower()) == true)
@@ -113,9 +109,9 @@ namespace SE_Assignment
                                         else
                                         {
                                             int oiID = 1;
-                                            customer.DisplayMenu(allSetMenus, allFoodItems, false, int.Parse(menuKind) - 1);
-                                            Console.Write("Select item: ");
 
+                                            customer.DisplayMenu(allSetMenus, allFoodItems, menuKind: int.Parse(menuKind) - 1);
+                                            Console.Write("Select item: ");
                                             var itemSelect = Console.ReadLine();
                                             if (isEscape(itemSelect.ToLower()) == true) { continue; }
                                             else
@@ -128,8 +124,8 @@ namespace SE_Assignment
                                                     Console.Write("How many of {0} do you want to add: ", selected.name);
                                                     int itemQty = int.Parse(Console.ReadLine());
 
-                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
-                                                    tempSetMenu = newOi;
+                                                    temp = new OrderItem(oiID, itemQty, selected);
+
 
 
                                                 }
@@ -141,7 +137,7 @@ namespace SE_Assignment
                                                     Console.Write("How many of {0} do you want to add: ", selected.name);
                                                     int itemQty = int.Parse(Console.ReadLine());
 
-                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
+                                                    temp = new OrderItem(oiID, itemQty, selected);
 
                                                 }
                                                 else
@@ -154,17 +150,21 @@ namespace SE_Assignment
 
                                                 if (response == "y")
                                                 {
-                                                    //customer.orderList.Add();
+                                                    newOrder.orderItemList.Add(temp);
+                                                    customer.orderList.Add(newOrder);
 
                                                     Console.WriteLine("Continue ordering? (Y/N): ");
                                                     response = Console.ReadLine().ToLower();
-
                                                     if (response == "y")
                                                     {
                                                         continue;
                                                     }
                                                     else if (response == "n")
                                                     {
+                                                        isSelecting = false;
+                                                        ordering = false;
+                                                        customer.makePayment(newOrder);
+                                                        customer.sendConfirmationEmail(newOrder);
                                                         break;
                                                     }
                                                     else
@@ -177,7 +177,6 @@ namespace SE_Assignment
                                                 {
                                                     Console.WriteLine("Continue ordering? (Y/N): ");
                                                     response = Console.ReadLine().ToLower();
-
                                                     if (response == "y")
                                                     {
                                                         continue;
@@ -199,27 +198,20 @@ namespace SE_Assignment
                                                     Console.WriteLine("Invalid Input");
                                                     Console.WriteLine("");
                                                 }
-
                                             }
-
                                         }
-
                                     }
                                     catch
                                     {
                                         Console.WriteLine("Invalid Input");
                                         Console.WriteLine("");
                                     }
-
                                 }
-
-
                             }
-
-
                             break;
 
                         case 2:
+                            customer.DisplayOrderList(customer.orderList);
                             break;
                         default:
                             break;
@@ -231,6 +223,7 @@ namespace SE_Assignment
                 }
             }
         }
+
 
         // Function 2
         // Allow the manager to manage food items and menus, including adding/updating/deleting of food items and menus

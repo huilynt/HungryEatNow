@@ -31,7 +31,7 @@ namespace SE_Assignment
         public List<Observer> observers = new List<Observer>();
         public Payment payment;
 
-        public Order(int id, DateTime createDateTime, string deliveryType)
+        public Order(int id, DateTime createDateTime)
         {
             this.id = id;
             this.createDateTime = createDateTime;
@@ -48,18 +48,16 @@ namespace SE_Assignment
             deliveredOrderState = new DeliveredOrderState(this);
             cancelledOrderState = new CancelledOrderState(this);
 
-            if (payment == null)
-            {
-                state = null;
-            }
-            else
-            {
-                state = newOrderState;
-            }
+            state = newOrderState;
 
             if (deliveryType == "Express")
             {
                 this.deliveryCharge = 5;
+                this.deliveryDateTime = createDateTime.AddMinutes(10);
+            }
+            else
+            {
+                this.deliveryDateTime = createDateTime.AddMinutes(30);
             }
 
             observers = new List<Observer>();
@@ -91,5 +89,29 @@ namespace SE_Assignment
         {
             // implementation
         }
+
+        public void calculateAmount()
+        {
+            double subamt = 0;
+            foreach (OrderItem oi in orderItemList)
+            {
+                if (oi.item != null)
+                {
+                    subamt += oi.item.price * oi.quantity;
+                }
+                else if (oi.setMenu != null)
+                {
+                    subamt += oi.setMenu.price * oi.quantity;
+                }
+            }
+
+            subamt += deliveryCharge;
+            this.subTotal = subamt;
+            double gstAmt = subamt * 7 / 100;
+
+            double totamt = subamt + gstAmt;
+            this.totalAmount = totamt;
+        }
+
     }
 }

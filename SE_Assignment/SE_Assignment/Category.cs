@@ -4,13 +4,11 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class Branch
+    class Category
     {
+        public int categoryId { get; set; }
         public string name { get; set; }
 
-        public Branch(string name)
-        {
-            this.name = name;
-        }
+        public List<Item> itemList;
     }
 }

@@ -63,5 +63,52 @@ namespace SE_Assignment
 
             Console.WriteLine("");
         }
+
+        //customer.orderList
+        public void DisplayOrderList(List<Order> orders, bool showHeader = true)
+        {
+            int count = 1;
+            if (showHeader == true)
+            {
+                Console.WriteLine("= Current Orders =\n" +
+                                  "==================");
+            }
+            foreach (Order o in orders)
+            {
+
+                Console.WriteLine($"Status: {o.state.ToString()}");
+                foreach (OrderItem oi in o.orderItemList)
+                {
+                    if (oi.item == null)
+                    {
+                        Console.WriteLine("{0}. {1}", count, oi.setMenu.name);
+                        count++;
+                    }
+                    else if (oi.setMenu == null)
+                    {
+                        Console.WriteLine("{0}. {1}", count, oi.item.name);
+                        count++;
+                    }
+                }
+            }
+
+            Console.WriteLine("");
+        }
+        public void rateRestaurant()
+        {
+            throw new NotImplementedException();
+
+        }
+        public void sendConfirmationEmail(Order o)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void makePayment(Order o)
+        {
+            throw new NotImplementedException();
+
+        }
+        public void createOrder() { }
     }
 }
