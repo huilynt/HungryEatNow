@@ -30,20 +30,15 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Available Food Items =\n" +
                                   "========================");
-                foreach (FoodItem food in fList)
-                {
-                    Console.WriteLine("{0}) {1}", count, food.name);
-                    count++;
-                }
             }
-            else
+            
+            
+            foreach (FoodItem food in fList)
             {
-                foreach (FoodItem food in fList)
-                {
-                    Console.WriteLine("{0}) {1}", count, food.name);
-                    count++;
-                }
+                Console.WriteLine("{0}) {1}", count, food.name);
+                count++;
             }
+            
 
             Console.WriteLine("");
         }
@@ -83,27 +78,16 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Available Set Menu =\n" +
                   "======================");
-                foreach (SetMenu sm in sList)
-                {
-                    Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);
-                    foreach (FoodItem fi in sm.foodItemList)
-                    {
-                        Console.WriteLine("\t-{0}", fi.name);
-                    }
-                    count++;
-                }
+
             }
-            else
+            foreach (SetMenu sm in sList)
             {
-                foreach (SetMenu sm in sList)
+                Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);
+                foreach (FoodItem fi in sm.foodItemList)
                 {
-                    Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);
-                    foreach (FoodItem fi in sm.foodItemList)
-                    {
-                        Console.WriteLine("\t-{0}", fi.name);
-                    }
-                    count++;
+                    Console.WriteLine("\t-{0}", fi.name);
                 }
+                count++;
             }
 
             Console.WriteLine("");
@@ -115,21 +99,15 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Set Menu Details =\n" +
                               "====================");
-                Console.WriteLine("Name: {0}", setmenu.name);
-                foreach(FoodItem item in setmenu.foodItemList)
-                {
-                    Console.WriteLine("\t-{0}", item.name);
-                }
+
             }
-            else
+            Console.WriteLine("Name: {0}", setmenu.name);
+            foreach (FoodItem item in setmenu.foodItemList)
             {
-                Console.WriteLine("Name: {0}", setmenu.name);
-                foreach (FoodItem item in setmenu.foodItemList)
-                {
-                    Console.WriteLine("\t-{0}", item.name);
-                }
+                Console.WriteLine("\t-{0}", item.name);
             }
-            
+            Console.WriteLine("");
+
         }
 
         public void DisplayOrderList(List<Order> orderList)
