@@ -29,20 +29,15 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Available Food Items =\n" +
                                   "========================");
+
                 foreach (SetMenuItem food in itemList)
                 {
                     Console.WriteLine("{0}) {1}", count, food.name);
                     count++;
                 }
+
             }
-            else
-            {
-                foreach (SetMenuItem food in itemList)
-                {
-                    Console.WriteLine("{0}) {1}", count, food.name);
-                    count++;
-                }
-            }
+
 
             Console.WriteLine("");
         }
@@ -110,18 +105,6 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Available Set Menu =\n" +
                   "======================");
-                foreach (SetMenu sm in sList)
-                {
-                    Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);
-                    foreach (SetMenuItem fi in sm.setMenuItemList)
-                    {
-                        Console.WriteLine("\t-{0}", fi.name);
-                    }
-                    count++;
-                }
-            }
-            else
-            {
                 foreach (SetMenu sm in sList)
                 {
                     Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);

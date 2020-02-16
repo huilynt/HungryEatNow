@@ -28,6 +28,10 @@ namespace SE_Assignment
             this.size = setMenuItemList.Count;
         }
 
+        public SetMenu()
+        {
+        }
+
         public void add(SetMenuItem setMenuItem)
         {
             setMenuItemList.Add(setMenuItem);

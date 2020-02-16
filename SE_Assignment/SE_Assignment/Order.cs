@@ -19,6 +19,7 @@ namespace SE_Assignment
         public List<OrderItem> orderItemList { get; set; }
         public bool archive { get; set; }
 
+
         public OrderState newOrderState { get; set; }
         public OrderState preparingOrderState { get; set; }
         public OrderState readyOrderState { get; set; }
@@ -28,14 +29,14 @@ namespace SE_Assignment
         public OrderState state { get; set; }
 
         public List<Observer> observers = new List<Observer>();
+        public Payment payment;
 
-        public Order(int id, DateTime createDateTime)
+        public Order(int id, DateTime createDateTime, string deliveryType)
         {
             this.id = id;
-            status = "New";
             this.createDateTime = createDateTime;
             deliveryCharge = 0;
-            deliveryType = "Default";
+            this.deliveryType = deliveryType;
             gst = 7.00;
             orderItemList = new List<OrderItem>();
             archive = false;
@@ -47,7 +48,19 @@ namespace SE_Assignment
             deliveredOrderState = new DeliveredOrderState(this);
             cancelledOrderState = new CancelledOrderState(this);
 
-            state = newOrderState;
+            if (payment == null)
+            {
+                state = null;
+            }
+            else
+            {
+                state = newOrderState;
+            }
+
+            if (deliveryType == "Express")
+            {
+                this.deliveryCharge = 5;
+            }
 
             observers = new List<Observer>();
         }
@@ -69,9 +82,14 @@ namespace SE_Assignment
             }
         }
 
-        public void displayOrders(List<Order> orderList)
+        public void archiveOrder()
         {
+            this.archive = true;
+        }
 
+        public void refundCustomer()
+        {
+            // implementation
         }
     }
 }

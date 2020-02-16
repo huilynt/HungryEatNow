@@ -50,7 +50,7 @@ namespace SE_Assignment
 
         public override string ToString()
         {
-            return "Ready";
+            return "Preparing";
         }
     }
 }

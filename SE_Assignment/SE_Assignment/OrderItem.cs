@@ -8,8 +8,8 @@ namespace SE_Assignment
     {
         public int id { get; set; }
         public int quantity { get; set; }
-        private Item item;
-        private SetMenu setMenu;
+        public Item item;
+        public SetMenu setMenu;
 
         public OrderItem(int id, int quantity, Item item)
         {

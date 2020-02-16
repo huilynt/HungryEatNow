@@ -23,12 +23,14 @@ namespace SE_Assignment
 
         public void cancelOrder()
         {
-            Console.WriteLine($"Cancelling Order {order.id}...");
+
             order.state = order.cancelledOrderState;
             foreach (Observer o in order.observers)
             {
                 order.removeObserver(o);
             }
+            order.refundCustomer();
+            order.archiveOrder();
             Console.WriteLine($"Cancelled Order {order.id}\n");
         }
 

@@ -12,13 +12,31 @@ namespace SE_Assignment
         public double amount { get; set; }
         public Order order { get; set; }
 
-        public Payment(int id, DateTime dateTime, string type, double amount, Order order)
+        public Payment(int id, DateTime dateTime, string type, Order order)
         {
             this.id = id;
             this.dateTime = dateTime;
             this.type = type;
-            this.amount = amount;
             this.order = order;
+
+            double amt = 0;
+            foreach (OrderItem oi in order.orderItemList)
+            {
+                if (oi.item != null)
+                {
+                    amt += oi.item.price * oi.quantity;
+                }
+                else if (oi.setMenu != null)
+                {
+                    amt += oi.setMenu.price * oi.quantity;
+                }
+            }
+            if (order.deliveryType.ToLower() == "express")
+            {
+                amt += order.deliveryCharge;
+            }
+
+            this.amount = 0;
         }
     }
 }

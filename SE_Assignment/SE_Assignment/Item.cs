@@ -23,6 +23,10 @@ namespace SE_Assignment
             this.status = status;
         }
 
+        public Item()
+        {
+        }
+
         public void update() { }
         public void remove() { }
         public void display() { }

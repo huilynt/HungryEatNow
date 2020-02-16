@@ -22,5 +22,46 @@ namespace SE_Assignment
             this.account = account;
             this.orderList = new List<Order>();
         }
+
+        public void DisplayMenu(List<SetMenu> setMenu, List<Item> foodItems, bool showHeader = true, int menuKind = 0)
+        {
+            int count = 1;
+            if (showHeader == true)
+            {
+                Console.WriteLine("= Available Menu =\n" +
+                                  "====================");
+            }
+            if (menuKind == 0)
+            {
+                //display set menu first
+                Console.WriteLine("= Set Menu(s) =\n" +
+                                  "===============");
+                count = 1;
+                foreach (SetMenu sm in setMenu)
+                {
+
+                    Console.WriteLine("{0}. {1} Price: ${2} ", count, sm.name, sm.price);
+                    foreach (SetMenuItem fi in sm.setMenuItemList)
+                    {
+                        Console.WriteLine("\t-{0}", fi.name);
+                    }
+                    count++;
+
+                }
+            }
+            else if (menuKind == 1)
+            {
+                Console.WriteLine("= Ala Carte Menu =\n" +
+                  "==================");
+                count = 1;
+                foreach (Item fi in foodItems)
+                {
+                    Console.WriteLine("{0}. {1} Price: ${2}", count, fi.name, fi.price);
+                    count++;
+                }
+            }
+
+            Console.WriteLine("");
+        }
     }
 }
