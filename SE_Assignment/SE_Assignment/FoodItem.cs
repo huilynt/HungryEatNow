@@ -6,23 +6,7 @@ namespace SE_Assignment
 {
     class FoodItem : Item
     {
-        public FoodItem(int id, string name, string description, int unit, string status = "available") : base(id, name, description, unit, status)
-        {
-
-        }
-
-        public void update()
-        {
-
-        }
-        public void remove()
-        {
-
-        }
-        public void display()
-        {
-
-        }
+        public FoodItem(int id, string name, string description, int unit, string status = "available") : base(id, name, description, unit, status) { }
 
         public override string ToString()
         {

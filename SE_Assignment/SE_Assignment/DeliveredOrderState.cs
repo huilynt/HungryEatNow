@@ -13,39 +13,34 @@ namespace SE_Assignment
             this.order = order;
         }
 
-        public void archiveOrder()
-        {
-            throw new NotImplementedException();
-        }
-
         public void cancelOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot cancel Delivered Order\n");
+        }
+
+        public void confirmOrder()
+        {
+            Console.WriteLine($"Cannot confirm Delivered Order\n");
         }
 
         public void deliverOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Order is already delivered\n");
         }
 
         public void dispatchOrder()
         {
-            throw new NotImplementedException();
-        }
-
-        public void newOrder()
-        {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot dispatch Delivered Order\n");
         }
 
         public void prepareOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot prepare Delivered Order\n");
         }
 
         public void readyOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot ready Delivered Order\n");
         }
     }
 }

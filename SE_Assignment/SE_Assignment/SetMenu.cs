@@ -21,19 +21,6 @@ namespace SE_Assignment
             this.size = foodItemList.Count;
         }
 
-        public void update()
-        {
-
-        }
-        public void remove()
-        {
-
-        }
-        public void display()
-        {
-
-        }
-
         public override string ToString()
         {
             string foodItems = "";

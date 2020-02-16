@@ -16,7 +16,7 @@ namespace SE_Assignment
         public static List<FoodItem> allFoodItems = new List<FoodItem>();
         public static List<SetMenu> allSetMenus = new List<SetMenu>();
 
-        // Function 1 - Huilin
+        // Function 1
         // Allow a customer to create a new order (i.e., choose food items or menu, select restaurant, select express delivery, etc.) and pay by credit card or other online means
 
 
@@ -49,59 +49,63 @@ namespace SE_Assignment
                         List<Order> orderByStateList = GetOrdersByState(new NewOrderState());
                         // 5. System displays Order information
                         DisplayOrders(orderByStateList, new NewOrderState());
-                        Console.Write("Select an order: ");
-
-                        int orderOption = -1;
-                        try
+                        if (orderByStateList.Count > 0)
                         {
-                            // 3. Chef selects an Order
-                            orderOption = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("");
 
-                            // 4. System retrieves selected Order
-                            Order chosenOrder = GetOrderById(orderOption);
+                            Console.Write("Select an order: ");
 
-                            if (chosenOrder == null)
+                            int orderOption = -1;
+                            try
                             {
-                                Console.WriteLine("Invalid Order.");
-                            }
-                            else
-                            {
-                                // 5. System prompts to Confirm or Cancel changing Order Status to Preparing
-                                Console.WriteLine($"Change Order {orderOption} to Preparing?");
-                                Console.WriteLine("1 Confirm");
-                                Console.WriteLine("2 Cancel");
-                                Console.Write("Select an option: ");
-
-                                int confirmOption = Int32.Parse(Console.ReadLine());
-
+                                // 3. Chef selects an Order
+                                orderOption = Int32.Parse(Console.ReadLine());
                                 Console.WriteLine("");
 
-                                // 6. Chef selects Confirm
-                                if (confirmOption == 1)
+                                // 4. System retrieves selected Order
+                                Order chosenOrder = GetOrderById(orderOption);
+
+                                if (chosenOrder == null)
                                 {
-                                    // 7. System updates Order Status to Preparing
-                                    // 8. System displays ‘Order Status changed to Preparing’
-                                    // 9. Use case ends
-                                    chef.prepareOrder(chosenOrder);
-                                }
-                                // 6.1 Chef selects Cancel
-                                // 6.2 Use case ends
-                                else if (confirmOption == 2)
-                                {
-                                    Console.WriteLine($"Cancelled changing Order {orderOption} to Preparing");
+                                    Console.WriteLine("Invalid Order.");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Please select a valid option!\n");
+                                    // 5. System prompts to Confirm or Cancel changing Order Status to Preparing
+                                    Console.WriteLine($"Change Order {orderOption} to Preparing?");
+                                    Console.WriteLine("1 Confirm");
+                                    Console.WriteLine("2 Cancel");
+                                    Console.Write("Select an option: ");
+
+                                    int confirmOption = Int32.Parse(Console.ReadLine());
+
+                                    Console.WriteLine("");
+
+                                    // 6. Chef selects Confirm
+                                    if (confirmOption == 1)
+                                    {
+                                        // 7. System updates Order Status to Preparing
+                                        // 8. System displays ‘Order Status changed to Preparing’
+                                        // 9. Use case ends
+                                        chef.prepareOrder(chosenOrder);
+                                    }
+                                    // 6.1 Chef selects Cancel
+                                    // 6.2 Use case ends
+                                    else if (confirmOption == 2)
+                                    {
+                                        Console.WriteLine($"Cancelled changing Order {orderOption} to Preparing");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Please select a valid option!\n");
+                                    }
                                 }
                             }
-                        }
-                        // 3.1 System prompts to enter a valid Order
-                        // 3.2 System returns to Step 2
-                        catch
-                        {
-                            Console.WriteLine("Please select a valid Order!\n");
+                            // 3.1 System prompts to enter a valid Order
+                            // 3.2 System returns to Step 2
+                            catch
+                            {
+                                Console.WriteLine("Please select a valid Order!\n");
+                            }
                         }
                     }
                     // 1. Chef chooses Dispatch Order
@@ -111,55 +115,57 @@ namespace SE_Assignment
                         Console.WriteLine("Showing all Preparing orders");
                         List<Order> orderByStateList = GetOrdersByState(new PreparingOrderState());
                         DisplayOrders(orderByStateList, new PreparingOrderState());
-                        Console.Write("Select an order: ");
-
-                        try
+                        if (orderByStateList.Count > 0)
                         {
-                            // 3. Chef selects an Order
-                            int orderOption = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("");
-
-                            // 4. System retrieves selected Order
-                            Order chosenOrder = GetOrderById(orderOption);
-
-                            if (chosenOrder == null)
+                            Console.Write("Select an order: ");
+                            try
                             {
-                                Console.WriteLine("Invalid Order.");
-                            }
-                            else
-                            {
-                                // 5. System prompts to Confirm or Cancel changing Order Status to ‘Ready’
-                                Console.WriteLine($"Change Order {orderOption} to Ready?");
-                                Console.WriteLine("1 Confirm");
-                                Console.WriteLine("2 Cancel");
-                                Console.Write("Select an option: ");
-
-                                int confirmOption = Int32.Parse(Console.ReadLine());
+                                // 3. Chef selects an Order
+                                int orderOption = Int32.Parse(Console.ReadLine());
                                 Console.WriteLine("");
 
-                                // 6. Chef selects Confirm
-                                if (confirmOption == 1)
+                                // 4. System retrieves selected Order
+                                Order chosenOrder = GetOrderById(orderOption);
+
+                                if (chosenOrder == null)
                                 {
-                                    // 7. System updates Order Status to ‘Ready’
-                                    // 8. System displays ‘Order Status changed to Ready’
-                                    // 9. Use case ends
-                                    chef.readyOrder(chosenOrder);
-                                }
-                                // 7.1 Chef chooses to cancel Status change
-                                // 7.2 Use case ends
-                                else if (confirmOption == 2)
-                                {
-                                    Console.WriteLine($"Cancel changing Order {orderOption} to Ready");
+                                    Console.WriteLine("Invalid Order.");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Please select a valid option!");
+                                    // 5. System prompts to Confirm or Cancel changing Order Status to ‘Ready’
+                                    Console.WriteLine($"Change Order {orderOption} to Ready?");
+                                    Console.WriteLine("1 Confirm");
+                                    Console.WriteLine("2 Cancel");
+                                    Console.Write("Select an option: ");
+
+                                    int confirmOption = Int32.Parse(Console.ReadLine());
+                                    Console.WriteLine("");
+
+                                    // 6. Chef selects Confirm
+                                    if (confirmOption == 1)
+                                    {
+                                        // 7. System updates Order Status to ‘Ready’
+                                        // 8. System displays ‘Order Status changed to Ready’
+                                        // 9. Use case ends
+                                        chef.readyOrder(chosenOrder);
+                                    }
+                                    // 6.1 Chef chooses to cancel Status change
+                                    // 6.2 Use case ends
+                                    else if (confirmOption == 2)
+                                    {
+                                        Console.WriteLine($"Cancel changing Order {orderOption} to Ready");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Please select a valid option!");
+                                    }
                                 }
                             }
+                            // 3.1 System prompts to enter a valid Order
+                            // 3.2 System returns to Step 2
+                            catch { Console.WriteLine("Please select a valid order!"); }
                         }
-                        // 3.1 System prompts to enter a valid Order
-                        // 3.2 System returns to Step 2
-                        catch { Console.WriteLine("Please select a valid order!"); }
                     }
                     // Logout
                     else if (option == 0) { break; }

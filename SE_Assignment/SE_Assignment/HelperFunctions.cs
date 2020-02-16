@@ -64,7 +64,7 @@ namespace SE_Assignment
                 // 2.2 Use case ends
                 // 2.1 System displays ‘There are no “Preparing” Orders at the moment’
                 // 2.2 Use case ends
-                Console.WriteLine($"There are no {state.ToString()} Orders at the moment.");
+                Console.WriteLine($"There are no {state.ToString()} Orders at the moment.\n");
             }
             return displayallOrders;
         }
