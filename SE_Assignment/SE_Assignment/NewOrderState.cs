@@ -32,9 +32,14 @@ namespace SE_Assignment
             Console.WriteLine($"Cancelled Order {order.id}\n");
         }
 
+        public void confirmOrder()
+        {
+            Console.WriteLine($"Order already confirmed\n");
+        }
+
         public void deliverOrder()
         {
-            Console.WriteLine($"Cannot Dispatch New Order\n");
+            Console.WriteLine($"Cannot Deliver New Order\n");
         }
 
         public void dispatchOrder()
@@ -42,14 +47,8 @@ namespace SE_Assignment
             Console.WriteLine($"Cannot Dispatch New Order\n");
         }
 
-        public void newOrder()
-        {
-            Console.WriteLine($"Order {order.id} is already New\n");
-        }
-
         public void prepareOrder()
         {
-            Console.WriteLine($"Preparing Order {order.id}...");
             order.state = order.preparingOrderState;
             foreach (Dispatcher d in allDispatchers)
             {

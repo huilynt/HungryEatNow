@@ -22,30 +22,62 @@ namespace SE_Assignment
             this.startDate = startDate;
         }
 
-            
-        public void DisplayFoodList(List<FoodItem> fList, bool showHeader = true)
+        public void DisplaySetMenuList(List<SetMenuItem> itemList, bool showHeader = true)
         {
             int count = 1;
             if (showHeader == true)
             {
                 Console.WriteLine("= Available Food Items =\n" +
                                   "========================");
+                foreach (SetMenuItem food in itemList)
+                {
+                    Console.WriteLine("{0}) {1}", count, food.name);
+                    count++;
+                }
             }
-            
-            
-            foreach (FoodItem food in fList)
+            else
             {
-                Console.WriteLine("{0}) {1}", count, food.name);
-                count++;
+                foreach (SetMenuItem food in itemList)
+                {
+                    Console.WriteLine("{0}) {1}", count, food.name);
+                    count++;
+                }
             }
-            
 
             Console.WriteLine("");
         }
 
-        public void DisplayFoodItem(FoodItem selected, bool showHeader = true)
+
+        public void DisplayFoodList(List<Item> fList, bool showHeader = true)
         {
-            
+
+            List<Item> itemList = (List<Item>)fList;
+            int count = 1;
+            if (showHeader == true)
+            {
+                Console.WriteLine("= Available Food Items =\n" +
+                                  "========================");
+                foreach (Item food in itemList)
+                {
+                    Console.WriteLine("{0}) {1}", count, food.name);
+                    count++;
+                }
+            }
+            else
+            {
+                foreach (Item food in itemList)
+                {
+                    Console.WriteLine("{0}) {1}", count, food.name);
+                    count++;
+                }
+            }
+
+            Console.WriteLine("");
+        }
+
+        public void DisplayFoodItem(Item selected, bool showHeader = true)
+        {
+
 
             if (showHeader == true)
             {
@@ -70,7 +102,7 @@ namespace SE_Assignment
             }
             Console.WriteLine("");
         }
-        
+
         public void DisplaySetMenuList(List<SetMenu> sList, bool showHeader = true)
         {
             int count = 1;
@@ -78,16 +110,27 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Available Set Menu =\n" +
                   "======================");
-
-            }
-            foreach (SetMenu sm in sList)
-            {
-                Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);
-                foreach (FoodItem fi in sm.foodItemList)
+                foreach (SetMenu sm in sList)
                 {
-                    Console.WriteLine("\t-{0}", fi.name);
+                    Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);
+                    foreach (SetMenuItem fi in sm.setMenuItemList)
+                    {
+                        Console.WriteLine("\t-{0}", fi.name);
+                    }
+                    count++;
                 }
-                count++;
+            }
+            else
+            {
+                foreach (SetMenu sm in sList)
+                {
+                    Console.WriteLine("{0}. Set Menu Name: {1}", count, sm.name);
+                    foreach (SetMenuItem fi in sm.setMenuItemList)
+                    {
+                        Console.WriteLine("\t-{0}", fi.name);
+                    }
+                    count++;
+                }
             }
 
             Console.WriteLine("");
@@ -95,18 +138,24 @@ namespace SE_Assignment
 
         public void DisplaySetMenuItem(SetMenu setmenu, bool showHeader = true)
         {
-            if(showHeader == true)
+            if (showHeader == true)
             {
                 Console.WriteLine("= Set Menu Details =\n" +
                               "====================");
-
+                Console.WriteLine("Name: {0}", setmenu.name);
+                foreach (SetMenuItem item in setmenu.setMenuItemList)
+                {
+                    Console.WriteLine("\t-{0}", item.name);
+                }
             }
-            Console.WriteLine("Name: {0}", setmenu.name);
-            foreach (FoodItem item in setmenu.foodItemList)
+            else
             {
-                Console.WriteLine("\t-{0}", item.name);
+                Console.WriteLine("Name: {0}", setmenu.name);
+                foreach (SetMenuItem item in setmenu.setMenuItemList)
+                {
+                    Console.WriteLine("\t-{0}", item.name);
+                }
             }
-            Console.WriteLine("");
 
         }
 

@@ -8,52 +8,44 @@ namespace SE_Assignment
     {
         private Order order;
 
-        public PreparingOrderState()
-        {
-        }
+        public PreparingOrderState() { }
 
         public PreparingOrderState(Order order)
         {
             this.order = order;
         }
 
-        public void archiveOrder()
-        {
-            throw new NotImplementedException();
-        }
-
         public void cancelOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot cancel Preparing Order\n");
+        }
+
+        public void confirmOrder()
+        {
+            Console.WriteLine($"Cannot confirm Preparing Order\n");
         }
 
         public void deliverOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot deliver Preparing Order\n");
         }
 
         public void dispatchOrder()
         {
-            throw new NotImplementedException();
-        }
-
-        public void newOrder()
-        {
-            throw new NotImplementedException();
+            Console.WriteLine($"Cannot dispatch Preparing Order\n");
         }
 
         public void prepareOrder()
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"Order is already preparing\n");
         }
 
         public void readyOrder()
         {
-            Console.WriteLine($"Preparing Order {order.id}...");
+            order.readyDateTime = DateTime.Now;
             order.state = order.readyOrderState;
             order.notifyObservers();
-            Console.WriteLine($"Changed Order {order.id} to Ready.");
-            Console.WriteLine("");
+            Console.WriteLine($"Changed Order {order.id} to Ready\n");
         }
 
         public override string ToString()

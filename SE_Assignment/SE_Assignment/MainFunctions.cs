@@ -14,222 +14,13 @@ namespace SE_Assignment
         public static List<Order> allOrders = new List<Order>();
         public static List<StoreAssistant> allStoreAssistants = new List<StoreAssistant>();
         public static List<Dispatcher> allDispatchers = new List<Dispatcher>();
-        public static List<FoodItem> allFoodItems = new List<FoodItem>();
+        public static List<Item> allFoodItems = new List<Item>();
         public static List<SetMenu> allSetMenus = new List<SetMenu>();
-        public static List<Branch> location = new List<Branch>();
-        public static List<string> escapePhrase = new List<string> { "exit", "done" };
-        public static List<string> deliveryMethods = new List<string> { "Express", "Normal" };
 
-        public static List<Order> customerOrderList = new List<Order>();
-        public static Func<string, bool> isEscape = (x) => escapePhrase.Exists(p => p == x);
-        // Function 1 - Huilin
+
+        // Function 1
         // Allow a customer to create a new order (i.e., choose food items or menu, select restaurant, select express delivery, etc.) and pay by credit card or other online means
-        public static void DisplayCustomerMenu(Customer customer)
-        {
-            int count = 0;
-            //Func<string, bool> isEscape = (x) => escapePhrase.Exists(p => p == x);
-            OrderItem temp = new OrderItem(1, 1, null);
-            bool isLoggin = true;
-            while (isLoggin == true)
-            {
-                Console.WriteLine("= Customer Menu =\n" +
-                                  "=================");
 
-                Console.WriteLine("1. New Order\n" +
-                                  "2. Check Order\n" +
-                                  "0. Log out");
-
-                Console.Write("Please select an option: ");
-
-
-                try
-                {
-                    string option = Console.ReadLine();
-                    Console.WriteLine("");
-                    if (isEscape(option.ToLower()) == true)
-                    {
-                        break;
-                    }
-
-                    switch (int.Parse(option))
-                    {
-                        case 1:
-                            bool ordering = true;
-                            int orderid = 0;
-                            while (ordering == true)
-                            {
-                                Order newOrder = new Order(orderid + 1, DateTime.Now);
-                                Console.WriteLine("= Delivery Method =\n" +
-                                                  "===================");
-                                count = 1;
-                                foreach (string delivery in deliveryMethods)
-                                {
-                                    Console.WriteLine("{0}. {1} Delivery", count, delivery);
-                                    count++;
-                                }
-                                Console.Write("Select delivery method: ");
-                                List<int>  choices = new List<int>(){ 1, 2 };
-                                Func<int, bool> check = (x) => choices.Exists(p=>p ==x); 
-                                int dChoice = Int32.Parse(Console.ReadLine());
-                                if (check(dChoice) == false)
-                                {
-                                    continue;
-                                }
-                                
-                                newOrder.deliveryType = deliveryMethods[dChoice - 1];
-
-                                Console.Write("Enter delivery address: ");
-                                customer.address = Console.ReadLine();
-
-                                Console.WriteLine("= Available Restaurant =\n" +
-                                                  "========================");
-                                count = 1;
-                                foreach (Branch s in location)
-                                {
-                                    Console.WriteLine("{0}. {1}", count, s.name);
-                                    count++;
-                                }
-                                Console.Write("Select restaurant: ");
-                                var restChoice = location[int.Parse(Console.ReadLine()) - 1];
-                                bool isSelecting = true;
-                                while (isSelecting == true)
-                                {
-                                    Console.WriteLine("= Available Menu =\n" +
-                                                      "===============");
-                                    Console.WriteLine("1. Set Menu\n" +
-                                                      "2. Ala Carte");
-                                    Console.Write("Select Menu: ");
-                                    var menuKind = Console.ReadLine();
-
-                                    try
-                                    {
-                                        if (isEscape(menuKind.ToLower()) == true)
-                                        {
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            customer.DisplayMenu(allSetMenus, allFoodItems, false, int.Parse(menuKind) - 1);
-                                            Console.Write("Select item: ");
-
-                                            var itemSelect = Console.ReadLine();
-                                            if (isEscape(itemSelect.ToLower()) == true) { continue; }
-                                            else
-                                            {
-                                                //set menu
-                                                if (int.Parse(menuKind) == 1)
-                                                {
-                                                    //set menu
-                                                    SetMenu selected = allSetMenus[int.Parse(itemSelect) - 1];
-                                                    Console.Write("How many of {0} do you want to add: ", selected.name);
-                                                    int itemQty = int.Parse(Console.ReadLine());
-
-                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
-                                                    temp = newOi;
-                                                    
-                                                }
-                                                // food item menu
-                                                else if (int.Parse(menuKind) == 2)
-                                                {
-                                                    //set menu
-                                                    FoodItem selected = allFoodItems[int.Parse(itemSelect) - 1];
-                                                    Console.Write("How many of {0} do you want to add: ", selected.name);
-                                                    int itemQty = int.Parse(Console.ReadLine());
-
-                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
-                                                    temp = newOi;
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine("Invalid Input");
-                                                    Console.WriteLine("");
-                                                }
-                                                Console.Write("Add current order to cart? (Y/N): ");
-                                                var response = Console.ReadLine().ToLower();
-
-                                                if (response == "y")
-                                                {
-                                                    newOrder.orderItemList.Add(temp);
-                                                    customer.orderList.Add(newOrder);
-
-                                                    Console.WriteLine("Continue ordering? (Y/N): ");
-                                                    response = Console.ReadLine().ToLower();
-
-                                                    if (response == "y")
-                                                    {
-                                                        continue;
-                                                    }
-                                                    else if (response == "n")
-                                                    {
-                                                        isSelecting = false;
-                                                        ordering = false;
-                                                        break;
-                                                    }
-                                                    else
-                                                    {
-                                                        Console.WriteLine("Invalid Input");
-                                                        Console.WriteLine("");
-                                                    }
-                                                }
-                                                else if (response == "n")
-                                                {
-                                                    Console.WriteLine("Continue ordering? (Y/N): ");
-                                                    response = Console.ReadLine().ToLower();
-
-                                                    if (response == "y")
-                                                    {
-                                                        continue;
-                                                    }
-                                                    else if (response == "n")
-                                                    {
-                                                        isSelecting = false;
-                                                        ordering = false;
-                                                        break;
-                                                    }
-                                                    else
-                                                    {
-                                                        Console.WriteLine("Invalid Input");
-                                                        Console.WriteLine("");
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    Console.WriteLine("Invalid Input");
-                                                    Console.WriteLine("");
-                                                }
-
-                                            }
-
-                                        }
-
-                                    }
-                                    catch
-                                    {
-                                        Console.WriteLine("Invalid Input");
-                                        Console.WriteLine("");
-                                    }
-
-                                }
-
-
-                            }
-
-
-                            break;
-
-                        case 2:
-                            customer.DisplayOrderList(customer.orderList);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                catch
-                {
-                    Console.WriteLine("Please select a valid option!");
-                }
-            }
-        }
 
         // Function 2
         // Allow the manager to manage food items and menus, including adding/updating/deleting of food items and menus
@@ -302,7 +93,6 @@ namespace SE_Assignment
                     switch (option)
                     {
                         case 1:
-
                             manager.DisplayFoodList(allFoodItems, showHeader: true);
                             int totalCount = allFoodItems.Count;
                             Console.Write("Would you like to add a new food item (Y/N): ");
@@ -328,7 +118,7 @@ namespace SE_Assignment
                                                   "-Price: {2}\n" +
                                                   "-Units: {3}\n" +
                                                   "-Status: {4}\n", name, description, price, unit, status);
-                                FoodItem temp = new FoodItem(totalCount + 1, name, description, price, unit, status);
+                                Item temp = new Item(totalCount + 1, name, description, price, unit, status);
                                 Console.Write("Are the details correct? (Y/N): ");
 
                                 var reply = Console.ReadLine().ToLower();
@@ -439,7 +229,7 @@ namespace SE_Assignment
 
                             }
                             else if (input == "n") { break; }
-                            else if (isEscape(input.ToLower()) == true)
+                            else if (input == "exit" || input == "Exit")
                             {
                                 break;
                             }
@@ -459,11 +249,11 @@ namespace SE_Assignment
                             Console.WriteLine("");
                             try
                             {
-                                if (isEscape(selection.ToLower()) == true)
+                                if (selection == "exit" || selection == "Exit")
                                 {
                                     break;
                                 }
-                                FoodItem selected = allFoodItems[int.Parse(selection) - 1];
+                                Item selected = allFoodItems[int.Parse(selection) - 1];
                                 //Disply details of selected food item
                                 manager.DisplayFoodItem(selected, showHeader: true);
 
@@ -502,7 +292,7 @@ namespace SE_Assignment
                             try
                             {
 
-                                if (isEscape(selection.ToLower()) == true)
+                                if (selection == "exit" || selection == "Exit")
                                 {
                                     break;
                                 }
@@ -570,7 +360,7 @@ namespace SE_Assignment
 
         }
 
-        public static FoodItem loopUpdate(FoodItem selected_temp)
+        public static Item loopUpdate(Item selected_temp)
         {
             bool conflict = false;
             bool isEditing = true;
@@ -701,7 +491,7 @@ namespace SE_Assignment
                         {
                             break;
                         }
-                        else if (isEscape(reply.ToLower()) == true)
+                        else if (reply == "exit" || reply == "Exit")
                         {
                             break;
                         }
@@ -720,7 +510,7 @@ namespace SE_Assignment
                         Console.WriteLine("");
                         try
                         {
-                            if (isEscape(selection.ToLower()) == true)
+                            if (selection == "exit" || selection == "Exit")
                             {
                                 break;
                             }
@@ -759,7 +549,7 @@ namespace SE_Assignment
                         var selectDelete = Console.ReadLine();
                         try
                         {
-                            if (isEscape(selectDelete.ToLower()) == true)
+                            if (selectDelete == "exit" || selectDelete == "Exit")
                             {
                                 break;
                             }
@@ -820,33 +610,34 @@ namespace SE_Assignment
             }
         }
 
-        public static SetMenu AddItemtoSetMenu(Manager manager, SetMenu menu, List<FoodItem> foodItemList)
+        public static SetMenu AddItemtoSetMenu(Manager manager, SetMenu menu, List<Item> foodList)
         {
             bool done = false;
-            List<FoodItem> tempList = new List<FoodItem>();
-            if (menu.foodItemList is null)
+            List<SetMenuItem> tempList = new List<SetMenuItem>();
+            if (menu.setMenuItemList is null)
             {
-                tempList = menu.foodItemList;
+                tempList = menu.setMenuItemList;
             }
             else
             {
-                tempList = menu.foodItemList;
+                tempList = menu.setMenuItemList;
             }
 
-            int totalFoodItemCount = foodItemList.Count;
+            int totalFoodItemCount = foodList.Count;
             while (done == false)
             {
 
-                manager.DisplayFoodList(foodItemList, showHeader: true);
+                manager.DisplayFoodList(foodList, showHeader: true);
                 Console.Write("Select a food item to be added: ");
                 try
                 {
                     var selection = Console.ReadLine();
-                    if (isEscape(selection.ToLower()) == true)
+                    if (selection == "Exit" || selection == "exit")
                     {
                         break;
                     }
-                    FoodItem selected = foodItemList[int.Parse(selection) - 1];
+                    Item food = foodList[int.Parse(selection) - 1];
+                    SetMenuItem selected = new SetMenuItem(tempList.Count + 1, food.name, menu, food);
                     Console.Write("Confirm the addition of {0}? (Y/N): ", selected.name);
                     string response = Console.ReadLine().ToLower();
                     if (response == "y")
@@ -854,6 +645,7 @@ namespace SE_Assignment
                         if (tempList is null)
                         {
                             tempList.Add(selected);
+                            Console.WriteLine(tempList.Count);
                             Console.WriteLine("Added {0}", selected.name);
                         }
                         else
@@ -902,7 +694,12 @@ namespace SE_Assignment
                     Console.WriteLine("Invalid input");
                 }
             }
-            menu.foodItemList = tempList;
+            foreach (SetMenuItem s in tempList)
+            {
+                Console.WriteLine(s.name);
+            }
+            Console.WriteLine(tempList.Count);
+            menu.setMenuItemList = tempList;
             return menu;
         }
 
@@ -914,24 +711,24 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Current Set Menu Items =\n" +
                   "==========================");
-                manager.DisplayFoodList(menu.foodItemList, showHeader: false);
+                manager.DisplaySetMenuList(menu.setMenuItemList, showHeader: false);
 
                 Console.Write("Selet a food item to be removed: ");
 
                 try
                 {
                     var selection = Console.ReadLine();
-                    if (isEscape(selection.ToLower()) == true)
+                    if (selection == "exit" || selection == "Exit")
                     {
                         break;
                     }
-                    FoodItem selected = menu.foodItemList[int.Parse(selection) - 1];
+                    SetMenuItem selected = menu.setMenuItemList[int.Parse(selection) - 1];
 
                     Console.Write("Confirm deletion of {0}? (Y/N): ", selected.name);
                     string reply = Console.ReadLine().ToLower();
                     if (reply == "y")
                     {
-                        menu.foodItemList.Remove(selected);
+                        menu.setMenuItemList.Remove(selected);
                         Console.Write("Cotinuation of deleting food item? (Y/N): ");
                         string reply1 = Console.ReadLine().ToLower();
                         if (reply1 == "y")
@@ -994,59 +791,63 @@ namespace SE_Assignment
                         List<Order> orderByStateList = GetOrdersByState(new NewOrderState());
                         // 5. System displays Order information
                         DisplayOrders(orderByStateList, new NewOrderState());
-                        Console.Write("Select an order: ");
-
-                        int orderOption = -1;
-                        try
+                        if (orderByStateList.Count > 0)
                         {
-                            // 3. Chef selects an Order
-                            orderOption = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("");
 
-                            // 4. System retrieves selected Order
-                            Order chosenOrder = GetOrderById(orderOption);
+                            Console.Write("Select an order: ");
 
-                            if (chosenOrder == null)
+                            int orderOption = -1;
+                            try
                             {
-                                Console.WriteLine("Invalid Order.");
-                            }
-                            else
-                            {
-                                // 5. System prompts to Confirm or Cancel changing Order Status to Preparing
-                                Console.WriteLine($"Change Order {orderOption} to Preparing?");
-                                Console.WriteLine("1 Confirm");
-                                Console.WriteLine("2 Cancel");
-                                Console.Write("Select an option: ");
-
-                                int confirmOption = Int32.Parse(Console.ReadLine());
-
+                                // 3. Chef selects an Order
+                                orderOption = Int32.Parse(Console.ReadLine());
                                 Console.WriteLine("");
 
-                                // 6. Chef selects Confirm
-                                if (confirmOption == 1)
+                                // 4. System retrieves selected Order
+                                Order chosenOrder = GetOrderById(orderOption);
+
+                                if (chosenOrder == null)
                                 {
-                                    // 7. System updates Order Status to Preparing
-                                    // 8. System displays ‘Order Status changed to Preparing’
-                                    // 9. Use case ends
-                                    chef.prepareOrder(chosenOrder);
-                                }
-                                // 6.1 Chef selects Cancel
-                                // 6.2 Use case ends
-                                else if (confirmOption == 2)
-                                {
-                                    Console.WriteLine($"Cancelled changing Order {orderOption} to Preparing");
+                                    Console.WriteLine("Invalid Order.");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Please select a valid option!\n");
+                                    // 5. System prompts to Confirm or Cancel changing Order Status to Preparing
+                                    Console.WriteLine($"Change Order {orderOption} to Preparing?");
+                                    Console.WriteLine("1 Confirm");
+                                    Console.WriteLine("2 Cancel");
+                                    Console.Write("Select an option: ");
+
+                                    int confirmOption = Int32.Parse(Console.ReadLine());
+
+                                    Console.WriteLine("");
+
+                                    // 6. Chef selects Confirm
+                                    if (confirmOption == 1)
+                                    {
+                                        // 7. System updates Order Status to Preparing
+                                        // 8. System displays ‘Order Status changed to Preparing’
+                                        // 9. Use case ends
+                                        chef.prepareOrder(chosenOrder);
+                                    }
+                                    // 6.1 Chef selects Cancel
+                                    // 6.2 Use case ends
+                                    else if (confirmOption == 2)
+                                    {
+                                        Console.WriteLine($"Cancelled changing Order {orderOption} to Preparing");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Please select a valid option!\n");
+                                    }
                                 }
                             }
-                        }
-                        // 3.1 System prompts to enter a valid Order
-                        // 3.2 System returns to Step 2
-                        catch
-                        {
-                            Console.WriteLine("Please select a valid Order!\n");
+                            // 3.1 System prompts to enter a valid Order
+                            // 3.2 System returns to Step 2
+                            catch
+                            {
+                                Console.WriteLine("Please select a valid Order!\n");
+                            }
                         }
                     }
                     // 1. Chef chooses Dispatch Order
@@ -1056,55 +857,57 @@ namespace SE_Assignment
                         Console.WriteLine("Showing all Preparing orders");
                         List<Order> orderByStateList = GetOrdersByState(new PreparingOrderState());
                         DisplayOrders(orderByStateList, new PreparingOrderState());
-                        Console.Write("Select an order: ");
-
-                        try
+                        if (orderByStateList.Count > 0)
                         {
-                            // 3. Chef selects an Order
-                            int orderOption = Int32.Parse(Console.ReadLine());
-                            Console.WriteLine("");
-
-                            // 4. System retrieves selected Order
-                            Order chosenOrder = GetOrderById(orderOption);
-
-                            if (chosenOrder == null)
+                            Console.Write("Select an order: ");
+                            try
                             {
-                                Console.WriteLine("Invalid Order.");
-                            }
-                            else
-                            {
-                                // 5. System prompts to Confirm or Cancel changing Order Status to ‘Ready’
-                                Console.WriteLine($"Change Order {orderOption} to Ready?");
-                                Console.WriteLine("1 Confirm");
-                                Console.WriteLine("2 Cancel");
-                                Console.Write("Select an option: ");
-
-                                int confirmOption = Int32.Parse(Console.ReadLine());
+                                // 3. Chef selects an Order
+                                int orderOption = Int32.Parse(Console.ReadLine());
                                 Console.WriteLine("");
 
-                                // 6. Chef selects Confirm
-                                if (confirmOption == 1)
+                                // 4. System retrieves selected Order
+                                Order chosenOrder = GetOrderById(orderOption);
+
+                                if (chosenOrder == null)
                                 {
-                                    // 7. System updates Order Status to ‘Ready’
-                                    // 8. System displays ‘Order Status changed to Ready’
-                                    // 9. Use case ends
-                                    chef.readyOrder(chosenOrder);
-                                }
-                                // 7.1 Chef chooses to cancel Status change
-                                // 7.2 Use case ends
-                                else if (confirmOption == 2)
-                                {
-                                    Console.WriteLine($"Cancel changing Order {orderOption} to Ready");
+                                    Console.WriteLine("Invalid Order.");
                                 }
                                 else
                                 {
-                                    Console.WriteLine("Please select a valid option!");
+                                    // 5. System prompts to Confirm or Cancel changing Order Status to ‘Ready’
+                                    Console.WriteLine($"Change Order {orderOption} to Ready?");
+                                    Console.WriteLine("1 Confirm");
+                                    Console.WriteLine("2 Cancel");
+                                    Console.Write("Select an option: ");
+
+                                    int confirmOption = Int32.Parse(Console.ReadLine());
+                                    Console.WriteLine("");
+
+                                    // 6. Chef selects Confirm
+                                    if (confirmOption == 1)
+                                    {
+                                        // 7. System updates Order Status to ‘Ready’
+                                        // 8. System displays ‘Order Status changed to Ready’
+                                        // 9. Use case ends
+                                        chef.readyOrder(chosenOrder);
+                                    }
+                                    // 6.1 Chef chooses to cancel Status change
+                                    // 6.2 Use case ends
+                                    else if (confirmOption == 2)
+                                    {
+                                        Console.WriteLine($"Cancel changing Order {orderOption} to Ready");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Please select a valid option!");
+                                    }
                                 }
                             }
+                            // 3.1 System prompts to enter a valid Order
+                            // 3.2 System returns to Step 2
+                            catch { Console.WriteLine("Please select a valid order!"); }
                         }
-                        // 3.1 System prompts to enter a valid Order
-                        // 3.2 System returns to Step 2
-                        catch { Console.WriteLine("Please select a valid order!"); }
                     }
                     // Logout
                     else if (option == 0) { break; }
@@ -1118,13 +921,9 @@ namespace SE_Assignment
 
         // Function 5
         // Allow the manager to view orders using various filters such as new, cancelled, delivered, delivering, archived, ready, preparing.
-
-
         public static void ManagerOrderMenu(Manager manager)
         {
             bool done = false;
-
-
 
             while (done == false)
             {
@@ -1148,7 +947,7 @@ namespace SE_Assignment
                         case 2:
                             bool filterOn = true;
 
-                            string[] states = { "Archived", "Cancelled", "Delivered", "Dispatched", "Preparing", "New" };
+                            string[] states = { "Cancelled", "Delivered", "Dispatched", "Preparing", "New" };
                             while (filterOn == true)
                             {
                                 int count = 2;
@@ -1165,7 +964,7 @@ namespace SE_Assignment
                                 string filter = Console.ReadLine();
                                 try
                                 {
-                                    if (isEscape(filter.ToLower()) == true)
+                                    if (filter == "exit" || filter == "Exit")
                                     {
                                         break;
                                     }
@@ -1181,9 +980,8 @@ namespace SE_Assignment
                                             }
                                             break;
                                         case "2":
-                                            //archived orders
-                                            List<Order> archivedList = GetOrdersByState(new ArchivedOrderState());
-                                            manager.DisplayOrderList(archivedList);
+                                            List<Order> cancelledList = GetOrdersByState(new CancelledOrderState());
+                                            manager.DisplayOrderList(cancelledList);
                                             Console.Write("Exit to exit process: ");
                                             string escape = Console.ReadLine().ToLower();
                                             if (escape == "exit")
@@ -1194,21 +992,8 @@ namespace SE_Assignment
                                             {
                                                 continue;
                                             }
-                                        case "3":
-                                            List<Order> cancelledList = GetOrdersByState(new CancelledOrderState());
-                                            manager.DisplayOrderList(cancelledList);
-                                            Console.Write("Exit to exit process: ");
-                                            escape = Console.ReadLine().ToLower();
-                                            if (escape == "exit")
-                                            {
-                                                break;
-                                            }
-                                            else
-                                            {
-                                                continue;
-                                            }
 
-                                        case "4":
+                                        case "3":
                                             List<Order> deliveredList = GetOrdersByState(new DeliveredOrderState());
                                             manager.DisplayOrderList(deliveredList);
                                             Console.Write("Exit to exit process: ");
@@ -1221,7 +1006,7 @@ namespace SE_Assignment
                                             {
                                                 continue;
                                             }
-                                        case "5":
+                                        case "4":
                                             List<Order> dispatchedList = GetOrdersByState(new DispatchedOrderState());
                                             manager.DisplayOrderList(dispatchedList);
                                             Console.Write("Exit to exit process: ");
@@ -1234,7 +1019,7 @@ namespace SE_Assignment
                                             {
                                                 continue;
                                             }
-                                        case "6":
+                                        case "5":
                                             List<Order> preparingList = GetOrdersByState(new PreparingOrderState());
                                             manager.DisplayOrderList(preparingList);
                                             Console.Write("Exit to exit process: ");
@@ -1247,7 +1032,7 @@ namespace SE_Assignment
                                             {
                                                 continue;
                                             }
-                                        case "7":
+                                        case "6":
                                             List<Order> newList = GetOrdersByState(new NewOrderState());
                                             manager.DisplayOrderList(newList);
                                             Console.Write("Exit to exit process: ");

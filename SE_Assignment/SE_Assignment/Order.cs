@@ -17,6 +17,7 @@ namespace SE_Assignment
         public double totalAmount { get; set; }
         public string deliveryType { get; set; }
         public List<OrderItem> orderItemList { get; set; }
+        public bool archive { get; set; }
 
         public OrderState newOrderState { get; set; }
         public OrderState preparingOrderState { get; set; }
@@ -24,7 +25,6 @@ namespace SE_Assignment
         public OrderState dispatchedOrderState { get; set; }
         public OrderState deliveredOrderState { get; set; }
         public OrderState cancelledOrderState { get; set; }
-        public OrderState archivedOrderState { get; set; }
         public OrderState state { get; set; }
 
         public List<Observer> observers = new List<Observer>();
@@ -38,6 +38,7 @@ namespace SE_Assignment
             deliveryType = "Default";
             gst = 7.00;
             orderItemList = new List<OrderItem>();
+            archive = false;
 
             newOrderState = new NewOrderState(this);
             preparingOrderState = new PreparingOrderState(this);
@@ -45,7 +46,6 @@ namespace SE_Assignment
             dispatchedOrderState = new DispatchedOrderState(this);
             deliveredOrderState = new DeliveredOrderState(this);
             cancelledOrderState = new CancelledOrderState(this);
-            archivedOrderState = new ArchivedOrderState(this);
 
             state = newOrderState;
 
