@@ -149,7 +149,7 @@ namespace SE_Assignment
                                                 var response = Console.ReadLine().ToLower();
 
                                                 if (response == "y")
-                                                {
+                                                
                                                     customer.orderList.Add(();
 
                                                     Console.WriteLine("Continue ordering? (Y/N): ");
