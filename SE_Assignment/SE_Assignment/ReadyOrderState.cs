@@ -48,6 +48,7 @@ namespace SE_Assignment
         public void readyOrder()
         {
             Console.WriteLine($"Order is already Ready\n");
+            order.status = "ready";
         }
     }
 }

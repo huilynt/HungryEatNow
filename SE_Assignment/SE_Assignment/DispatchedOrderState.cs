@@ -8,6 +8,10 @@ namespace SE_Assignment
     {
         private Order order;
 
+        public DispatchedOrderState()
+        {
+        }
+
         public DispatchedOrderState(Order order)
         {
             this.order = order;

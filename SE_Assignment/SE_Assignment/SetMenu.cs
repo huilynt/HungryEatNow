@@ -4,39 +4,47 @@ using System.Text;
 
 namespace SE_Assignment
 {
-    class SetMenu : Item
+    class SetMenu
     {
+        public int setMenuId { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public double price { get; set; }
+        public int unit { get; set; }
+        public string status { get; set; }
         public int size { get; set; }
-        public List<FoodItem> foodItemList { get; set; }
+        public List<SetMenuItem> setMenuItemList { get; set; }
 
-        public SetMenu(int id, string name, string description,double price, int unit, string status) : base(id, name, description,price, unit, status)
+        public SetMenu(int setMenuId, string name, string description, double price, int unit, string status = "available")
         {
-            this.foodItemList = new List<FoodItem>();
-            this.size = foodItemList.Count;
+            this.setMenuId = setMenuId;
+            this.name = name;
+            this.description = description;
+            this.price = price;
+            this.unit = unit;
+            this.status = status;
+            this.setMenuItemList = new List<SetMenuItem>();
+
+            this.size = setMenuItemList.Count;
         }
-        //public SetMenu(int id, string name, string description, int unit, string status)
-        //{
-        //    this.foodItemList = new List<FoodItem>();
-        //    this.size = foodItemList.Count;
-        //}
 
-        public void add(FoodItem foodItem)
+        public void add(SetMenuItem setMenuItem)
         {
-            foodItemList.Add(foodItem);
-            this.size = foodItemList.Count;
+            setMenuItemList.Add(setMenuItem);
+            this.size = setMenuItemList.Count;
         }
 
         public override string ToString()
         {
-            string foodItems = "";
-            foreach (FoodItem i in foodItemList)
+            string setMenuItems = "";
+            foreach (SetMenuItem i in setMenuItemList)
             {
-                foodItems += "\t" + i.name + "\n";
+                setMenuItems += "\t" + i.name + "\n";
             }
             return $"Name: {name}\n" +
                 $"Description: {description}\n" +
                 $"Items:\n" +
-                foodItems +
+                setMenuItems +
                 "\n";
         }
     }

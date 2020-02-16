@@ -29,7 +29,7 @@ namespace SE_Assignment
                     {
                         loginUser = c;
                         Console.WriteLine("Logged in successfully!");
-                        Console.WriteLine($"Welcome, {c.name}!\n");
+                        Console.WriteLine($"Welcome, {c.name} {c.id}!\n");
                     }
                 }
             }
@@ -103,5 +103,7 @@ namespace SE_Assignment
             }
             return null;
         }
+
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using static SE_Assignment.HelperFunctions;
+using System.Reflection;
 
 namespace SE_Assignment
 {
@@ -13,9 +14,9 @@ namespace SE_Assignment
         public static List<Order> allOrders = new List<Order>();
         public static List<StoreAssistant> allStoreAssistants = new List<StoreAssistant>();
         public static List<Dispatcher> allDispatchers = new List<Dispatcher>();
-        public static List<FoodItem> allFoodItems = new List<FoodItem>();
+        public static List<Item> allFoodItems = new List<Item>();
         public static List<SetMenu> allSetMenus = new List<SetMenu>();
-        public static Menu menu = new Menu(allSetMenus, allFoodItems);
+
 
         // Function 1
         // Allow a customer to create a new order (i.e., choose food items or menu, select restaurant, select express delivery, etc.) and pay by credit card or other online means
@@ -25,51 +26,49 @@ namespace SE_Assignment
         // Allow the manager to manage food items and menus, including adding/updating/deleting of food items and menus
         public static void DisplayManagerMainMenu(Manager manager)
         {
-            try
+
+            bool isLoggin = true;
+            while (isLoggin == true)
             {
-                bool isLoggin = true;
-                while (isLoggin)
+                Console.WriteLine("= Manager Main Menu =\n" +
+                                  "=====================");
+                Console.WriteLine("1) Manage Food Items\n" +
+                                  "2) Manage Menus\n" +
+                                  "3) Orders Menu\n" +
+                                  "0) Log Out");
+                Console.Write("Please select an option: ");
+
+                try
                 {
-                    Console.WriteLine("= Manager Main Menu =\n" +
-                                      "=====================");
-                    Console.WriteLine("1) Manage Food Items\n" +
-                                      "2) Manage Menus\n" +
-                                      "0) Log Out");
-                    Console.Write("Please select an option: ");
-                    
-                    try
+                    int option = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("");
+                    switch (option)
                     {
-                        int option = Int32.Parse(Console.ReadLine());
-                        Console.WriteLine("");
-                        switch (option)
-                        {
-                            case 1:
-                                ManagerMenuFood(manager);
-                                break;
-                            case 2:
-                                ManagerMenuSet(manager);
-                                break;
-                            case 0:
-                                isLoggin = false;
-                                break;
-                            default:
-                                isLoggin = true;
-                                Console.WriteLine("Please select a valid option!");
-                                Console.WriteLine("");
-                                break;
-                        }
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Please select a valid option!");
+                        case 1:
+                            ManagerMenuFood(manager);
+                            break;
+                        case 2:
+                            ManagerMenuSet(manager);
+                            break;
+                        case 3:
+                            ManagerOrderMenu(manager);
+                            break;
+                        case 0:
+                            isLoggin = false;
+                            break;
+                        default:
+                            isLoggin = true;
+                            Console.WriteLine("Please select a valid option!");
+                            Console.WriteLine("");
+                            break;
                     }
                 }
+                catch
+                {
+                    Console.WriteLine("Please select a valid option!");
+                }
             }
-            catch
-            {
-                Console.WriteLine("Please select a valid option!");
-                Console.WriteLine("");
-            }
+
 
         }
 
@@ -90,11 +89,10 @@ namespace SE_Assignment
                 {
                     int option = Int32.Parse(Console.ReadLine());
                     Console.WriteLine("");
-                    
+
                     switch (option)
                     {
                         case 1:
-
                             manager.DisplayFoodList(allFoodItems, showHeader: true);
                             int totalCount = allFoodItems.Count;
                             Console.Write("Would you like to add a new food item (Y/N): ");
@@ -120,7 +118,7 @@ namespace SE_Assignment
                                                   "-Price: {2}\n" +
                                                   "-Units: {3}\n" +
                                                   "-Status: {4}\n", name, description, price, unit, status);
-                                FoodItem temp = new FoodItem(totalCount + 1, name, description, price, unit, status);
+                                Item temp = new Item(totalCount + 1, name, description, price, unit, status);
                                 Console.Write("Are the details correct? (Y/N): ");
 
                                 var reply = Console.ReadLine().ToLower();
@@ -255,7 +253,7 @@ namespace SE_Assignment
                                 {
                                     break;
                                 }
-                                FoodItem selected = allFoodItems[int.Parse(selection) - 1];
+                                Item selected = allFoodItems[int.Parse(selection) - 1];
                                 //Disply details of selected food item
                                 manager.DisplayFoodItem(selected, showHeader: true);
 
@@ -293,7 +291,7 @@ namespace SE_Assignment
                             selection = Console.ReadLine();
                             try
                             {
-                                
+
                                 if (selection == "exit" || selection == "Exit")
                                 {
                                     break;
@@ -362,7 +360,7 @@ namespace SE_Assignment
 
         }
 
-        public static FoodItem loopUpdate(FoodItem selected_temp)
+        public static Item loopUpdate(Item selected_temp)
         {
             bool conflict = false;
             bool isEditing = true;
@@ -496,7 +494,7 @@ namespace SE_Assignment
                         else if (reply == "exit" || reply == "Exit")
                         {
                             break;
-                        } 
+                        }
                         else
                         {
                             Console.WriteLine("Invalid input");
@@ -612,24 +610,24 @@ namespace SE_Assignment
             }
         }
 
-        public static SetMenu AddItemtoSetMenu(Manager manager, SetMenu menu, List<FoodItem> foodItemList)
+        public static SetMenu AddItemtoSetMenu(Manager manager, SetMenu menu, List<Item> foodList)
         {
             bool done = false;
-            List<FoodItem> tempList = new List<FoodItem>();
-            if (menu.foodItemList is null)
+            List<SetMenuItem> tempList = new List<SetMenuItem>();
+            if (menu.setMenuItemList is null)
             {
-                tempList = menu.foodItemList;
+                tempList = menu.setMenuItemList;
             }
             else
             {
-                tempList = menu.foodItemList;
+                tempList = menu.setMenuItemList;
             }
 
-            int totalFoodItemCount = foodItemList.Count;
+            int totalFoodItemCount = foodList.Count;
             while (done == false)
             {
 
-                manager.DisplayFoodList(foodItemList, showHeader: true);
+                manager.DisplayFoodList(foodList, showHeader: true);
                 Console.Write("Select a food item to be added: ");
                 try
                 {
@@ -638,7 +636,8 @@ namespace SE_Assignment
                     {
                         break;
                     }
-                    FoodItem selected = foodItemList[int.Parse(selection) - 1];
+                    Item food = foodList[int.Parse(selection) - 1];
+                    SetMenuItem selected = new SetMenuItem(tempList.Count + 1, food.name, menu, food);
                     Console.Write("Confirm the addition of {0}? (Y/N): ", selected.name);
                     string response = Console.ReadLine().ToLower();
                     if (response == "y")
@@ -646,6 +645,7 @@ namespace SE_Assignment
                         if (tempList is null)
                         {
                             tempList.Add(selected);
+                            Console.WriteLine(tempList.Count);
                             Console.WriteLine("Added {0}", selected.name);
                         }
                         else
@@ -694,7 +694,12 @@ namespace SE_Assignment
                     Console.WriteLine("Invalid input");
                 }
             }
-            menu.foodItemList = tempList;
+            foreach (SetMenuItem s in tempList)
+            {
+                Console.WriteLine(s.name);
+            }
+            Console.WriteLine(tempList.Count);
+            menu.setMenuItemList = tempList;
             return menu;
         }
 
@@ -706,7 +711,7 @@ namespace SE_Assignment
             {
                 Console.WriteLine("= Current Set Menu Items =\n" +
                   "==========================");
-                manager.DisplayFoodList(menu.foodItemList, showHeader: false);
+                manager.DisplaySetMenuList(menu.setMenuItemList, showHeader: false);
 
                 Console.Write("Selet a food item to be removed: ");
 
@@ -717,13 +722,13 @@ namespace SE_Assignment
                     {
                         break;
                     }
-                    FoodItem selected = menu.foodItemList[int.Parse(selection) - 1];
+                    SetMenuItem selected = menu.setMenuItemList[int.Parse(selection) - 1];
 
                     Console.Write("Confirm deletion of {0}? (Y/N): ", selected.name);
                     string reply = Console.ReadLine().ToLower();
                     if (reply == "y")
                     {
-                        menu.foodItemList.Remove(selected);
+                        menu.setMenuItemList.Remove(selected);
                         Console.Write("Cotinuation of deleting food item? (Y/N): ");
                         string reply1 = Console.ReadLine().ToLower();
                         if (reply1 == "y")
@@ -756,6 +761,9 @@ namespace SE_Assignment
             }
             return menu;
         }
+
+
+
 
         // Function 3 - Huilin
         // Allow a chef to select the order he wishes to prepare and update the order for dispatch once the order is ready
@@ -913,6 +921,165 @@ namespace SE_Assignment
 
         // Function 5
         // Allow the manager to view orders using various filters such as new, cancelled, delivered, delivering, archived, ready, preparing.
+        public static void ManagerOrderMenu(Manager manager)
+        {
+            bool done = false;
+
+            while (done == false)
+            {
+                Console.WriteLine("= Manager Orders Menu =\n" +
+                                  "=======================");
+                Console.WriteLine("1) All orders\n" +
+                                  "2) Filter orders\n" +
+                                  "0) Exit to main menu");
+
+                Console.Write("Please selection a option: ");
+                var input = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
+                try
+                {
+                    switch (input)
+                    {
+                        case 1:
+
+                            manager.DisplayOrderList(allOrders);
+                            break;
+                        case 2:
+                            bool filterOn = true;
+
+                            string[] states = { "Cancelled", "Delivered", "Dispatched", "Preparing", "New" };
+                            while (filterOn == true)
+                            {
+                                int count = 2;
+                                Console.WriteLine("= Select Filter =\n" +
+                                                  "=================");
+                                Console.WriteLine("1. All");
+                                foreach (string state in states)
+                                {
+                                    Console.WriteLine("{0}. {1}", count, state);
+                                    count++;
+                                }
+                                Console.Write("Please select a filter: ");
+
+                                string filter = Console.ReadLine();
+                                try
+                                {
+                                    if (filter == "exit" || filter == "Exit")
+                                    {
+                                        break;
+                                    }
+
+                                    switch (filter)
+                                    {
+                                        case "1":
+                                            Console.WriteLine("= Showing '{0}' orders =\n" +
+                                                              "========================", states[int.Parse(filter) - 1]);
+                                            foreach (Order o in allOrders)
+                                            {
+                                                Console.WriteLine("{0}\tOrder {1}", o.state, o.id);
+                                            }
+                                            break;
+                                        case "2":
+                                            List<Order> cancelledList = GetOrdersByState(new CancelledOrderState());
+                                            manager.DisplayOrderList(cancelledList);
+                                            Console.Write("Exit to exit process: ");
+                                            string escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+
+                                        case "3":
+                                            List<Order> deliveredList = GetOrdersByState(new DeliveredOrderState());
+                                            manager.DisplayOrderList(deliveredList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        case "4":
+                                            List<Order> dispatchedList = GetOrdersByState(new DispatchedOrderState());
+                                            manager.DisplayOrderList(dispatchedList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        case "5":
+                                            List<Order> preparingList = GetOrdersByState(new PreparingOrderState());
+                                            manager.DisplayOrderList(preparingList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        case "6":
+                                            List<Order> newList = GetOrdersByState(new NewOrderState());
+                                            manager.DisplayOrderList(newList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        default:
+                                            Console.WriteLine("Invalid input");
+                                            Console.WriteLine("");
+                                            break;
+                                    }
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Invalid input");
+                                    Console.WriteLine("");
+                                }
+
+                            }
+                            break;
+
+                        case 3:
+                            done = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input");
+                            Console.WriteLine("");
+                            break;
+                    }
+
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input");
+                    Console.WriteLine("");
+                }
+            }
+
+
+
+        }
 
     }
 }

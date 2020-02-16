@@ -8,6 +8,10 @@ namespace SE_Assignment
     {
         private Order order;
 
+        public DeliveredOrderState()
+        {
+        }
+
         public DeliveredOrderState(Order order)
         {
             this.order = order;
@@ -25,7 +29,7 @@ namespace SE_Assignment
 
         public void deliverOrder()
         {
-            Console.WriteLine($"Order is already delivered\n");
+            Console.WriteLine($"Order {order.id} is already delivered\n");
         }
 
         public void dispatchOrder()
