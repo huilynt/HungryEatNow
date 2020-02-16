@@ -131,5 +131,25 @@ namespace SE_Assignment
             }
             
         }
+
+        public void DisplayOrderList(List<Order> orderList)
+        {
+            if (orderList.Count > 0)
+            {
+                Console.WriteLine("Status: Order:");
+                foreach (Order i in orderList)
+                {
+
+                    Console.WriteLine("{0}:    Order No.{1} ", i.status, i.id);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No orders in this category");
+                Console.WriteLine("");
+            }
+
+        }
+
     }
 }

@@ -8,6 +8,10 @@ namespace SE_Assignment
     {
         private Order order;
 
+        public CancelledOrderState()
+        {
+        }
+
         public CancelledOrderState(Order order)
         {
             this.order = order;

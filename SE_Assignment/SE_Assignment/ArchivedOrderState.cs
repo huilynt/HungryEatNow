@@ -8,9 +8,11 @@ namespace SE_Assignment
     {
         private Order order;
 
+        public ArchivedOrderState() { }
         public ArchivedOrderState(Order order)
         {
             this.order = order;
+            
         }
 
         public void archiveOrder()

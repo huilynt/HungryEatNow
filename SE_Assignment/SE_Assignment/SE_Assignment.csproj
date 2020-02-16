@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Compile Remove="managerFunctions.cs" />
+    <Compile Remove="Menu.cs" />
     <Compile Remove="SetMeals.cs" />
   </ItemGroup>
 

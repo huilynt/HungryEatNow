@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using static SE_Assignment.HelperFunctions;
+using System.Reflection;
 
 namespace SE_Assignment
 {
@@ -15,7 +16,7 @@ namespace SE_Assignment
         public static List<Dispatcher> allDispatchers = new List<Dispatcher>();
         public static List<FoodItem> allFoodItems = new List<FoodItem>();
         public static List<SetMenu> allSetMenus = new List<SetMenu>();
-        public static Menu menu = new Menu(allSetMenus, allFoodItems);
+
 
         // Function 1 - Huilin
         // Allow a customer to create a new order (i.e., choose food items or menu, select restaurant, select express delivery, etc.) and pay by credit card or other online means
@@ -25,51 +26,49 @@ namespace SE_Assignment
         // Allow the manager to manage food items and menus, including adding/updating/deleting of food items and menus
         public static void DisplayManagerMainMenu(Manager manager)
         {
-            try
+
+            bool isLoggin = true;
+            while (isLoggin == true)
             {
-                bool isLoggin = true;
-                while (isLoggin)
+                Console.WriteLine("= Manager Main Menu =\n" +
+                                  "=====================");
+                Console.WriteLine("1) Manage Food Items\n" +
+                                  "2) Manage Menus\n" +
+                                  "3) Orders Menu\n" +
+                                  "0) Log Out");
+                Console.Write("Please select an option: ");
+
+                try
                 {
-                    Console.WriteLine("= Manager Main Menu =\n" +
-                                      "=====================");
-                    Console.WriteLine("1) Manage Food Items\n" +
-                                      "2) Manage Menus\n" +
-                                      "0) Log Out");
-                    Console.Write("Please select an option: ");
-                    
-                    try
+                    int option = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("");
+                    switch (option)
                     {
-                        int option = Int32.Parse(Console.ReadLine());
-                        Console.WriteLine("");
-                        switch (option)
-                        {
-                            case 1:
-                                ManagerMenuFood(manager);
-                                break;
-                            case 2:
-                                ManagerMenuSet(manager);
-                                break;
-                            case 0:
-                                isLoggin = false;
-                                break;
-                            default:
-                                isLoggin = true;
-                                Console.WriteLine("Please select a valid option!");
-                                Console.WriteLine("");
-                                break;
-                        }
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Please select a valid option!");
+                        case 1:
+                            ManagerMenuFood(manager);
+                            break;
+                        case 2:
+                            ManagerMenuSet(manager);
+                            break;
+                        case 3:
+                            ManagerOrderMenu(manager);
+                            break;
+                        case 0:
+                            isLoggin = false;
+                            break;
+                        default:
+                            isLoggin = true;
+                            Console.WriteLine("Please select a valid option!");
+                            Console.WriteLine("");
+                            break;
                     }
                 }
+                catch
+                {
+                    Console.WriteLine("Please select a valid option!");
+                }
             }
-            catch
-            {
-                Console.WriteLine("Please select a valid option!");
-                Console.WriteLine("");
-            }
+
 
         }
 
@@ -90,7 +89,7 @@ namespace SE_Assignment
                 {
                     int option = Int32.Parse(Console.ReadLine());
                     Console.WriteLine("");
-                    
+
                     switch (option)
                     {
                         case 1:
@@ -293,7 +292,7 @@ namespace SE_Assignment
                             selection = Console.ReadLine();
                             try
                             {
-                                
+
                                 if (selection == "exit" || selection == "Exit")
                                 {
                                     break;
@@ -496,7 +495,7 @@ namespace SE_Assignment
                         else if (reply == "exit" || reply == "Exit")
                         {
                             break;
-                        } 
+                        }
                         else
                         {
                             Console.WriteLine("Invalid input");
@@ -757,6 +756,9 @@ namespace SE_Assignment
             return menu;
         }
 
+
+
+
         // Function 3 - Huilin
         // Allow a chef to select the order he wishes to prepare and update the order for dispatch once the order is ready
         public static void DisplayChefMenu(Chef chef)
@@ -907,6 +909,183 @@ namespace SE_Assignment
 
         // Function 5
         // Allow the manager to view orders using various filters such as new, cancelled, delivered, delivering, archived, ready, preparing.
+
+
+        public static void ManagerOrderMenu(Manager manager)
+        {
+            bool done = false;
+
+            
+            
+            while (done == false)
+            {
+                Console.WriteLine("= Manager Orders Menu =\n" +
+                                  "=======================");
+                Console.WriteLine("1) All orders\n" +
+                                  "2) Filter orders\n" +
+                                  "0) Exit to main menu");
+
+                Console.Write("Please selection a option: ");
+                var input = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
+                try
+                {
+                    switch (input)
+                    {
+                        case 1:
+
+                            manager.DisplayOrderList(allOrders);
+                            break;
+                        case 2:
+                            bool filterOn = true;
+
+                            string[] states = { "Archived", "Cancelled", "Delivered", "Dispatched", "Preparing", "New" };
+                            while (filterOn == true)
+                            {
+                                int count = 2;
+                                Console.WriteLine("= Select Filter =\n" +
+                                                  "=================");
+                                Console.WriteLine("1. All");
+                                foreach(string state in states)
+                                {
+                                    Console.WriteLine("{0}. {1}", count, state);
+                                    count++;
+                                }
+                                Console.Write("Please select a filter: ");
+
+                                string filter = Console.ReadLine();
+                                try
+                                {
+                                    if (filter == "exit" || filter == "Exit")
+                                    {
+                                        break;
+                                    }
+                                    
+                                    switch (filter)
+                                    {
+                                        case "1":
+                                            Console.WriteLine("= Showing '{0}' orders =\n" +
+                                                              "========================", states[int.Parse(filter) - 1]);
+                                            foreach (Order o in allOrders)
+                                            {
+                                                Console.WriteLine("{0}\tOrder {1}", o.state, o.id);
+                                            }
+                                            break;
+                                        case "2":
+                                            //archived orders
+                                            List<Order> archivedList = GetOrdersByState(new ArchivedOrderState());
+                                            manager.DisplayOrderList(archivedList);
+                                            Console.Write("Exit to exit process: ");
+                                            string escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        case "3":
+                                            List<Order> cancelledList = GetOrdersByState(new CancelledOrderState());
+                                            manager.DisplayOrderList(cancelledList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+
+                                        case "4":
+                                            List<Order> deliveredList = GetOrdersByState(new DeliveredOrderState());
+                                            manager.DisplayOrderList(deliveredList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        case "5":
+                                            List<Order> dispatchedList = GetOrdersByState(new DispatchedOrderState());
+                                            manager.DisplayOrderList(dispatchedList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        case "6":
+                                            List<Order> preparingList = GetOrdersByState(new PreparingOrderState());
+                                            manager.DisplayOrderList(preparingList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        case "7":
+                                            List<Order> newList = GetOrdersByState(new NewOrderState());
+                                            manager.DisplayOrderList(newList);
+                                            Console.Write("Exit to exit process: ");
+                                            escape = Console.ReadLine().ToLower();
+                                            if (escape == "exit")
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        default:
+                                            Console.WriteLine("Invalid input");
+                                            Console.WriteLine("");
+                                            break;
+                                    }
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("Invalid input");
+                                    Console.WriteLine("");
+                                }
+
+                            }
+                            break;
+
+                        case 3:
+                            done = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input");
+                            Console.WriteLine("");
+                            break;
+                    }
+
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input");
+                    Console.WriteLine("");
+                }
+            }
+
+
+
+        }
 
     }
 }

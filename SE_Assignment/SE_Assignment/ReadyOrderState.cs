@@ -45,7 +45,7 @@ namespace SE_Assignment
 
         public void readyOrder()
         {
-            throw new NotImplementedException();
+            order.status = "ready";
         }
     }
 }

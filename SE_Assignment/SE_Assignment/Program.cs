@@ -59,7 +59,7 @@ namespace SE_Assignment
                 string password = "123";
 
                 // Customer
-                Account customerAccount1 = new Account(1, "customer1@se.com", password);
+                Account customerAccount1 = new Account(1, "customer", password);
                 allAccounts.Add(customerAccount1);
                 Customer customer1 = new Customer(1, "customer1", "Yew Tee", "87654321", customerAccount1);
                 allCustomers.Add(customer1);
@@ -70,7 +70,7 @@ namespace SE_Assignment
                 allCustomers.Add(customer1);
 
                 // Manager
-                Account managerAccount1 = new Account(3, "manager1", password);
+                Account managerAccount1 = new Account(3, "manager", password);
                 allAccounts.Add(managerAccount1);
                 Manager manager1 = new Manager(1, "manager1", "T1234567A", "Male", "87654321", DateTime.Now, "Status", managerAccount1, DateTime.Now);
                 allEmployees.Add(manager1);
@@ -82,7 +82,7 @@ namespace SE_Assignment
                 allStoreAssistants.Add(storeAssistant1);
 
                 // Chef
-                Account chefAccount1 = new Account(5, "chef1@se.com", password);
+                Account chefAccount1 = new Account(5, "chef", password);
                 allAccounts.Add(chefAccount1);
                 Chef chef1 = new Chef(1, "chef1", "T1234567A", "Male", "87654321", DateTime.Now, "Status", chefAccount1);
                 allEmployees.Add(chef1);
@@ -104,39 +104,36 @@ namespace SE_Assignment
                 allDispatchers.Add(dispatcher3);
 
                 // FoodItem
-                Item foodItem1 = new FoodItem(1, "Buttermilk Crispy Chicken", "Crispy whole-muscle chicken thigh flavoured with buttermilk packed in a glazed burger bun.",9.90, 1, "available");
-                Item foodItem2 = new FoodItem(2, "Original Angus Cheeseburger", "Made from all the things you love – two slices of melty cheese, slivered onions and 100% Angus beef.",11.90 , 1, "available");
-                Item foodItem3 = new FoodItem(3, "Classic Angus Cheese", "Our delicious classic begins with a juicy 100% Angus beef patty between creamy Colby cheese slices.", 10.90, 1, "available");
-                Item foodItem4 = new FoodItem(4, "French Fries", "For winning flavour and texture, we only use premium Russet Burbank variety potatoes for that fluffy inside, crispy outside taste of our world-famous fries.", 5.90, 1, "available");
-                Item foodItem5 = new FoodItem(5, "Apple Slices", "Go fruity with fresh, ready-to-eat apple slices!", 3.20, 1, "available");
-                Item foodItem6 = new FoodItem(6, "Coca-Cola", "Icy cold cola.",3.5, 1, "available");
-                Item foodItem7 = new FoodItem(7, "100% Pure Orange Juice", "Pure orange juice, with Vitamin C.",3.0, 1, "available");
-                Item foodItem8 = new FoodItem(8, "Test food", "Food Description", 10.0, 10, "available");
-                Item[] alacarte = { foodItem1, foodItem2, foodItem3, foodItem4, foodItem5, foodItem6, foodItem7, foodItem8 };
+                FoodItem foodItem1 = new FoodItem(1, "Buttermilk Crispy Chicken", "Crispy whole-muscle chicken thigh flavoured with buttermilk packed in a glazed burger bun.",9.90, 1, "available");
+                FoodItem foodItem2 = new FoodItem(2, "Original Angus Cheeseburger", "Made from all the things you love – two slices of melty cheese, slivered onions and 100% Angus beef.",11.90 , 1, "available");
+                FoodItem foodItem3 = new FoodItem(3, "Classic Angus Cheese", "Our delicious classic begins with a juicy 100% Angus beef patty between creamy Colby cheese slices.", 10.90, 1, "available");
+                FoodItem foodItem4 = new FoodItem(4, "French Fries", "For winning flavour and texture, we only use premium Russet Burbank variety potatoes for that fluffy inside, crispy outside taste of our world-famous fries.", 5.90, 1, "available");
+                FoodItem foodItem5 = new FoodItem(5, "Apple Slices", "Go fruity with fresh, ready-to-eat apple slices!", 3.20, 1, "available");
+                FoodItem foodItem6 = new FoodItem(6, "Coca-Cola", "Icy cold cola.",3.5, 1, "available");
+                FoodItem foodItem7 = new FoodItem(7, "100% Pure Orange Juice", "Pure orange juice, with Vitamin C.",3.0, 1, "available");
+                FoodItem foodItem8 = new FoodItem(8, "Test food", "Food Description", 10.0, 10, "available");
+                FoodItem[] alacarte = { foodItem1, foodItem2, foodItem3, foodItem4, foodItem5, foodItem6, foodItem7, foodItem8 };
                 int FICount = 0; //keep id in ascending order
-                foreach (Item a in alacarte)
+                foreach (FoodItem a in alacarte)
                 {
-                    FoodItem item = (FoodItem)a;
-                    item.id = FICount + 1;
-                    allFoodItems.Add(item);
+                    a.id = FICount + 1;
+                    allFoodItems.Add(a);
                     FICount++;
 
                 }
                 // SetMenu
                 SetMenu setMenu1 = new SetMenu(1, "Buttermilk Crispy Chicken Set", "Buttermilk Crispy Chicken with French Fries and Coca-Cola", 12.80, 1, "available");
-                Item[] setItem1 = { foodItem1, foodItem4, foodItem6 };
-                foreach (Item i in setItem1)
+                FoodItem[] setItem1 = { foodItem1, foodItem4, foodItem6 };
+                foreach (FoodItem i in setItem1)
                 {
-                    FoodItem item = (FoodItem)i;
-                    setMenu1.foodItemList.Add(item);
+                    setMenu1.foodItemList.Add(i);
                 }
 
                 SetMenu setMenu2 = new SetMenu(2, "Original Angus Cheeseburger Set", "Original Angus Cheeseburger with Apple Slices and 100% Pure Orange Juice",13.90, 1, "available");
-                Item[] setItem2 = { foodItem2, foodItem5, foodItem7 };
-                foreach (Item i in setItem2)
+                FoodItem[] setItem2 = { foodItem2, foodItem5, foodItem7 };
+                foreach (FoodItem i in setItem2)
                 {
-                    FoodItem item = (FoodItem)i;
-                    setMenu2.add(item);
+                    setMenu2.add(i);
                 }
                 SetMenu[] menuList = { setMenu1, setMenu2 };
                 FICount = 0;
