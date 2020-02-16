@@ -10,11 +10,11 @@ namespace SE_Assignment
         public int menuID { get; set; }
         public int getSize { get; set; }
 
-        public List<SetMeals> setMenuList = new List<SetMeals>();
+        public List<SetMenu> setMenuList = new List<SetMenu>();
 
         public List<FoodItem> foodItemList = new List<FoodItem>();
         
-        public Menu(List<SetMeals> setList, List<FoodItem> foodList)
+        public Menu(List<SetMenu> setList, List<FoodItem> foodList)
         {
             this.setMenuList = setList;
             this.foodItemList = foodList;
