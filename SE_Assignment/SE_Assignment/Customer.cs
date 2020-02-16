@@ -63,5 +63,23 @@ namespace SE_Assignment
 
             Console.WriteLine("");
         }
+
+        public void DisplayOrderList(List<Order> orders, bool showHeader = true)
+        {
+            if(showHeader == true)
+            {
+                Console.WriteLine("= Current Orders =\n" +
+                                  "==================");
+            }
+            foreach(Order o in orders)
+            {
+                foreach(OrderItem oi in o.orderItemList)
+                {
+                    Console.WriteLine("{0}, {1}, {2}", oi.id, oi.quantity, oi.item.name);
+                }
+            }
+
+
+        }
     }
 }

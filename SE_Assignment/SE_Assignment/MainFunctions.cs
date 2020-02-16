@@ -109,7 +109,6 @@ namespace SE_Assignment
                                         }
                                         else
                                         {
-                                            int oiID = 1;
                                             customer.DisplayMenu(allSetMenus, allFoodItems, false, int.Parse(menuKind) - 1);
                                             Console.Write("Select item: ");
 
@@ -127,7 +126,7 @@ namespace SE_Assignment
 
                                                     OrderItem newOi = new OrderItem(oiID, itemQty, selected);
                                                     temp = newOi;
-
+                                                    
                                                 }
                                                 // food item menu
                                                 else if (int.Parse(menuKind) == 2)
@@ -138,7 +137,7 @@ namespace SE_Assignment
                                                     int itemQty = int.Parse(Console.ReadLine());
 
                                                     OrderItem newOi = new OrderItem(oiID, itemQty, selected);
-
+                                                    temp = newOi;
                                                 }
                                                 else
                                                 {
@@ -149,8 +148,9 @@ namespace SE_Assignment
                                                 var response = Console.ReadLine().ToLower();
 
                                                 if (response == "y")
-                                                
-                                                    customer.orderList.Add(();
+                                                {
+                                                    newOrder.orderItemList.Add(temp);
+                                                    customer.orderList.Add(newOrder);
 
                                                     Console.WriteLine("Continue ordering? (Y/N): ");
                                                     response = Console.ReadLine().ToLower();
@@ -161,6 +161,8 @@ namespace SE_Assignment
                                                     }
                                                     else if (response == "n")
                                                     {
+                                                        isSelecting = false;
+                                                        ordering = false;
                                                         break;
                                                     }
                                                     else
@@ -216,6 +218,7 @@ namespace SE_Assignment
                             break;
 
                         case 2:
+                            customer.DisplayOrderList(customer.orderList);
                             break;
                         default:
                             break;
