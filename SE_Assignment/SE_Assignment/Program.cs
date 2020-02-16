@@ -40,6 +40,10 @@ namespace SE_Assignment
                         {
                             DisplayManagerMainMenu((Manager)user);
                         }
+                        else if (user is Customer)
+                        {
+                            DisplayCustomerMenu((Customer)user);
+                        }
                     }
                     else if (loginOption == 0) { break; }
                     else
@@ -168,7 +172,7 @@ namespace SE_Assignment
                 order3.orderItemList.Add(new OrderItem(1, 1, setMenu1));
                 order3.orderItemList.Add(new OrderItem(1, 2, foodItem3));
                 allOrders.Add(order3);
-                //customer1.orderList.Add(order3);
+                customer1.orderList.Add(order3);
 
                 Order order4 = new Order(4, DateTime.Now);
                 order4.orderItemList.Add(new OrderItem(1, 1, setMenu1));

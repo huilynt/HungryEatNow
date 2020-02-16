@@ -38,6 +38,7 @@ namespace SE_Assignment
                                   "=================");
                 Console.WriteLine("1. New Order\n" +
                                   "2. Check Order\n" +
+                                  "3. Checkout\n" +
                                   "0. Log out");
                 Console.Write("Please select an option: ");
                 try
@@ -76,6 +77,7 @@ namespace SE_Assignment
                                 newOrder.deliveryType = deliveryMethods[dChoice - 1];
                                 Console.Write("Enter delivery address: ");
                                 customer.address = Console.ReadLine();
+
                                 Console.WriteLine("= Available Restaurant =\n" +
                                                   "========================");
                                 count = 1;
@@ -87,8 +89,11 @@ namespace SE_Assignment
                                 Console.Write("Select restaurant: ");
                                 var restChoice = location[int.Parse(Console.ReadLine()) - 1];
                                 bool isSelecting = true;
+
+                                OrderItem temp = new OrderItem(orderid, 0, (Item)null);
                                 while (isSelecting == true)
                                 {
+
                                     Console.WriteLine("= Available Menu =\n" +
                                                       "===============");
                                     Console.WriteLine("1. Set Menu\n" +
@@ -104,8 +109,9 @@ namespace SE_Assignment
                                         else
                                         {
                                             int oiID = 1;
+                                            
+                                            customer.DisplayMenu(allSetMenus, allFoodItems, menuKind: int.Parse(menuKind) - 1);
                                             Console.Write("Select item: ");
-
                                             var itemSelect = Console.ReadLine();
                                             if (isEscape(itemSelect.ToLower()) == true) { continue; }
                                             else
@@ -118,7 +124,7 @@ namespace SE_Assignment
                                                     Console.Write("How many of {0} do you want to add: ", selected.name);
                                                     int itemQty = int.Parse(Console.ReadLine());
 
-                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
+                                                    temp = new OrderItem(oiID, itemQty, selected);
                                                     
 
 
@@ -131,9 +137,8 @@ namespace SE_Assignment
                                                     Console.Write("How many of {0} do you want to add: ", selected.name);
                                                     int itemQty = int.Parse(Console.ReadLine());
 
-                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
+                                                    temp = new OrderItem(oiID, itemQty, selected);
 
-                                                    
                                                 }
                                                 else
                                                 {
@@ -145,6 +150,7 @@ namespace SE_Assignment
 
                                                 if (response == "y")
                                                 {
+                                                    newOrder.orderItemList.Add(temp);
                                                     customer.orderList.Add(newOrder);
 
                                                     Console.WriteLine("Continue ordering? (Y/N): ");
@@ -203,6 +209,8 @@ namespace SE_Assignment
                             break;
 
                         case 2:
+                            customer.DisplayOrderList(customer.orderList);
+                            Console.WriteLine("Testing");
                             break;
                         default:
                             break;

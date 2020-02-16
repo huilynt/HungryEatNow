@@ -23,7 +23,7 @@ namespace SE_Assignment
             this.orderList = new List<Order>();
         }
 
-        public void DisplayMenu(List<SetMenu> setMenu, List<FoodItem> foodItems, bool showHeader = true, int menuKind = 0)
+        public void DisplayMenu(List<SetMenu> setMenu, List<Item> foodItems, bool showHeader = true, int menuKind = 0)
         {
             int count = 1;
             if (showHeader == true)
@@ -41,7 +41,7 @@ namespace SE_Assignment
                 {
 
                     Console.WriteLine("{0}. {1} Price: ${2} ", count, sm.name, sm.price);
-                    foreach (FoodItem fi in sm.foodItemList)
+                    foreach (SetMenuItem fi in sm.setMenuItemList)
                     {
                         Console.WriteLine("\t-{0}", fi.name);
                     }
@@ -54,7 +54,7 @@ namespace SE_Assignment
                 Console.WriteLine("= Ala Carte Menu =\n" +
                   "==================");
                 count = 1;
-                foreach (FoodItem fi in foodItems)
+                foreach (Item fi in foodItems)
                 {
                     Console.WriteLine("{0}. {1} Price: ${2}", count, fi.name, fi.price);
                     count++;
@@ -64,8 +64,10 @@ namespace SE_Assignment
             Console.WriteLine("");
         }
 
+        //customer.orderList
         public void DisplayOrderList(List<Order> orders, bool showHeader = true)
         {
+            int count = 1;
             if(showHeader == true)
             {
                 Console.WriteLine("= Current Orders =\n" +
@@ -75,11 +77,20 @@ namespace SE_Assignment
             {
                 foreach(OrderItem oi in o.orderItemList)
                 {
-                    Console.WriteLine("{0}, {1}, {2}", oi.id, oi.quantity, oi.item.name);
+                    if (oi.item == null)
+                    {
+                        Console.WriteLine("{0}. {1}", count, oi.setMenu.name);
+                        count++;
+                    }
+                    else if(oi.setMenu == null)
+                    {
+                        Console.WriteLine("{0}. {1}", count, oi.item.name);
+                        count++;
+                    }
                 }
             }
 
-
+            Console.WriteLine("");
         }
     }
 }
