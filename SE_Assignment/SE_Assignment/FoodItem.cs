@@ -18,19 +18,5 @@ namespace SE_Assignment
                 $"Description: {description}\n";
         }
 
-        public bool isExist(List<FoodItem> list, FoodItem item)
-        {
-            bool exists = false;
-
-            foreach( FoodItem fi in list)
-            {
-                if (fi.Equals(item))
-                {
-                    exists = true;
-                }
-            }
-
-            return exists;
-        }
     }
 }
