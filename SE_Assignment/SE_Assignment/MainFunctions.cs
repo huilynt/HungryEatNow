@@ -17,10 +17,206 @@ namespace SE_Assignment
         public static List<Item> allFoodItems = new List<Item>();
         public static List<SetMenu> allSetMenus = new List<SetMenu>();
 
+        public static List<Branch> location = new List<Branch>() { new Branch("Yew Tee"), new Branch("Beauty World") };
+        public static List<string> escapePhrase = new List<string> { "exit", "done" };
+        public static List<string> deliveryMethods = new List<string> { "Express", "Normal" };
+        public static List<Order> customerOrderList = new List<Order>();
+        public static Func<string, bool> isEscape = (x) => escapePhrase.Exists(p => p == x);
+
 
         // Function 1
         // Allow a customer to create a new order (i.e., choose food items or menu, select restaurant, select express delivery, etc.) and pay by credit card or other online means
+        public static void DisplayCustomerMenu(Customer customer)
+        {
+            int count = 0;
+            int orderid = 1;
 
+            bool isLoggin = true;
+            while (isLoggin == true)
+            {
+                Console.WriteLine("= Customer Menu =\n" +
+                                  "=================");
+                Console.WriteLine("1. New Order\n" +
+                                  "2. Check Order\n" +
+                                  "0. Log out");
+                Console.Write("Please select an option: ");
+                try
+                {
+                    string option = Console.ReadLine();
+                    Console.WriteLine("");
+                    if (isEscape(option.ToLower()) == true)
+                    {
+                        break;
+                    }
+                    switch (int.Parse(option))
+                    {
+                        case 1:
+                            bool ordering = true;
+                            
+                            while (ordering == true)
+                            {
+                                Order newOrder = new Order(orderid, DateTime.Now);
+                                Console.WriteLine("= Delivery Method =\n" +
+                                                  "===================");
+                                count = 1;
+                                foreach (string delivery in deliveryMethods)
+                                {
+                                    Console.WriteLine("{0}. {1} Delivery", count, delivery);
+                                    count++;
+                                }
+                                Console.Write("Select delivery method: ");
+                                List<int> choices = new List<int>() { 1, 2 };
+                                Func<int, bool> check = (x) => choices.Exists(p => p == x);
+                                int dChoice = Int32.Parse(Console.ReadLine());
+                                if (check(dChoice) == false)
+                                {
+                                    continue;
+                                }
+
+                                newOrder.deliveryType = deliveryMethods[dChoice - 1];
+                                Console.Write("Enter delivery address: ");
+                                customer.address = Console.ReadLine();
+                                Console.WriteLine("= Available Restaurant =\n" +
+                                                  "========================");
+                                count = 1;
+                                foreach (Branch s in location)
+                                {
+                                    Console.WriteLine("{0}. {1}", count, s.name);
+                                    count++;
+                                }
+                                Console.Write("Select restaurant: ");
+                                var restChoice = location[int.Parse(Console.ReadLine()) - 1];
+                                bool isSelecting = true;
+                                while (isSelecting == true)
+                                {
+                                    Console.WriteLine("= Available Menu =\n" +
+                                                      "===============");
+                                    Console.WriteLine("1. Set Menu\n" +
+                                                      "2. Ala Carte");
+                                    Console.Write("Select Menu: ");
+                                    var menuKind = Console.ReadLine();
+                                    try
+                                    {
+                                        if (isEscape(menuKind.ToLower()) == true)
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            int oiID = 1;
+                                            Console.Write("Select item: ");
+
+                                            var itemSelect = Console.ReadLine();
+                                            if (isEscape(itemSelect.ToLower()) == true) { continue; }
+                                            else
+                                            {
+                                                //set menu
+                                                if (int.Parse(menuKind) == 1)
+                                                {
+                                                    //set menu
+                                                    SetMenu selected = allSetMenus[int.Parse(itemSelect) - 1];
+                                                    Console.Write("How many of {0} do you want to add: ", selected.name);
+                                                    int itemQty = int.Parse(Console.ReadLine());
+
+                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
+                                                    
+
+
+                                                }
+                                                // food item menu
+                                                else if (int.Parse(menuKind) == 2)
+                                                {
+                                                    //set menu
+                                                    Item selected = allFoodItems[int.Parse(itemSelect) - 1];
+                                                    Console.Write("How many of {0} do you want to add: ", selected.name);
+                                                    int itemQty = int.Parse(Console.ReadLine());
+
+                                                    OrderItem newOi = new OrderItem(oiID, itemQty, selected);
+
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Invalid Input");
+                                                    Console.WriteLine("");
+                                                }
+                                                Console.Write("Add current order to cart? (Y/N): ");
+                                                var response = Console.ReadLine().ToLower();
+
+                                                if (response == "y")
+                                                {
+                                                    customer.orderList.Add(newOrder);
+
+                                                    Console.WriteLine("Continue ordering? (Y/N): ");
+                                                    response = Console.ReadLine().ToLower();
+                                                    if (response == "y")
+                                                    {
+                                                        continue;
+                                                    }
+                                                    else if (response == "n")
+                                                    {
+                                                        isSelecting = false;
+                                                        ordering = false;
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Invalid Input");
+                                                        Console.WriteLine("");
+                                                    }
+                                                }
+                                                else if (response == "n")
+                                                {
+                                                    Console.WriteLine("Continue ordering? (Y/N): ");
+                                                    response = Console.ReadLine().ToLower();
+                                                    if (response == "y")
+                                                    {
+                                                        continue;
+                                                    }
+                                                    else if (response == "n")
+                                                    {
+                                                        isSelecting = false;
+                                                        ordering = false;
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        Console.WriteLine("Invalid Input");
+                                                        Console.WriteLine("");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    Console.WriteLine("Invalid Input");
+                                                    Console.WriteLine("");
+                                                }
+                                            }
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        Console.WriteLine("Invalid Input");
+                                        Console.WriteLine("");
+                                    }
+                                }
+                            }
+                            break;
+
+                        case 2:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Please select a valid option!");
+                }
+            }
+        }
+
+        // Function 2
+        // Allow the manager to manage food items and menus, including adding/updating/deleting of food items and menus
 
         // Function 2
         // Allow the manager to manage food items and menus, including adding/updating/deleting of food items and menus
@@ -229,7 +425,7 @@ namespace SE_Assignment
 
                             }
                             else if (input == "n") { break; }
-                            else if (input == "exit" || input == "Exit")
+                            else if (isEscape(input.ToLower()) == true)
                             {
                                 break;
                             }
@@ -249,7 +445,7 @@ namespace SE_Assignment
                             Console.WriteLine("");
                             try
                             {
-                                if (selection == "exit" || selection == "Exit")
+                                if (isEscape(selection.ToLower()) == true)
                                 {
                                     break;
                                 }
@@ -292,7 +488,7 @@ namespace SE_Assignment
                             try
                             {
 
-                                if (selection == "exit" || selection == "Exit")
+                                if (isEscape(selection.ToLower()) == true)
                                 {
                                     break;
                                 }
@@ -491,7 +687,7 @@ namespace SE_Assignment
                         {
                             break;
                         }
-                        else if (reply == "exit" || reply == "Exit")
+                        else if (isEscape(reply.ToLower()) == true)
                         {
                             break;
                         }
@@ -510,7 +706,7 @@ namespace SE_Assignment
                         Console.WriteLine("");
                         try
                         {
-                            if (selection == "exit" || selection == "Exit")
+                            if (isEscape(selection.ToLower()) == true)
                             {
                                 break;
                             }
@@ -549,7 +745,7 @@ namespace SE_Assignment
                         var selectDelete = Console.ReadLine();
                         try
                         {
-                            if (selectDelete == "exit" || selectDelete == "Exit")
+                            if (isEscape(selectDelete.ToLower()) == true)
                             {
                                 break;
                             }
@@ -632,7 +828,7 @@ namespace SE_Assignment
                 try
                 {
                     var selection = Console.ReadLine();
-                    if (selection == "Exit" || selection == "exit")
+                    if (isEscape(selection.ToLower()) == true)
                     {
                         break;
                     }
@@ -718,7 +914,7 @@ namespace SE_Assignment
                 try
                 {
                     var selection = Console.ReadLine();
-                    if (selection == "exit" || selection == "Exit")
+                    if (isEscape(selection.ToLower()) == true)
                     {
                         break;
                     }
@@ -964,7 +1160,7 @@ namespace SE_Assignment
                                 string filter = Console.ReadLine();
                                 try
                                 {
-                                    if (filter == "exit" || filter == "Exit")
+                                    if (isEscape(filter.ToLower()) == true)
                                     {
                                         break;
                                     }

@@ -40,10 +40,6 @@ namespace SE_Assignment
                         {
                             DisplayManagerMainMenu((Manager)user);
                         }
-                        else if (user is Customer)
-                        {
-                            DisplayCustomerMenu((Customer)user);
-                        }
                     }
                     else if (loginOption == 0) { break; }
                     else
@@ -180,10 +176,6 @@ namespace SE_Assignment
                 order4.state = order4.preparingOrderState;
                 allOrders.Add(order4);
                 //customer1.orderList.Add(order4);
-
-                location.Add(new Branch("Yew Tee"));
-                location.Add(new Branch("Beauty World"));
-
             }
         }
     }
